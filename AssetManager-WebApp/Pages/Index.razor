@@ -2,9 +2,56 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="main d-flex align-items-center " style="height: 100vh;">
 
-Welcome to your new app.
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 border border-3 rounded-5 mx-2">
+
+                <div class="col">
+                    <a href="#"><img src="../../../icons/SAM-head.png" alt="" class="img-fluid"></a>
+                </div>
+
+                <div class="col d-lg-flex align-items-center">
+                    <form action="" class="row mb-3 p-2" >
+
+                        <div class="mb-3 col-lg-">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" id="email" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                        </div>
+
+                        <!--  -->
+
+                        <div class="row mb-3">
+
+                            <div class="col">
+
+                                <div class="form-check form-switch">
+                                    <input type="checkbox" name="" id="view-password" class="form-check-input">
+                                    <label for="view-password" class="form-check-label">View password</label>
+                                </div>
+
+                            </div>
+
+                            <div class="col text-end">
+                                <p>Not user ? <a href="" class="text-decoration-none">Guest</a></p>
+                            </div>
+
+                        </div>
+
+                        <div class="col mb-3">
+                            <button type="submit" class="btn btn-primary form-control">Sign in </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
