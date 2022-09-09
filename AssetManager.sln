@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManager", "AssetManager\AssetManager.csproj", "{25524F32-AAE9-48FF-8943-BC22238535A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetManager-WebApp", "AssetManager-WebApp\AssetManager-WebApp.csproj", "{41A43264-300D-4454-AD0A-B76E95D5BADD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,10 +17,6 @@ Global
 		{25524F32-AAE9-48FF-8943-BC22238535A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25524F32-AAE9-48FF-8943-BC22238535A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{25524F32-AAE9-48FF-8943-BC22238535A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{41A43264-300D-4454-AD0A-B76E95D5BADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41A43264-300D-4454-AD0A-B76E95D5BADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41A43264-300D-4454-AD0A-B76E95D5BADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41A43264-300D-4454-AD0A-B76E95D5BADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
