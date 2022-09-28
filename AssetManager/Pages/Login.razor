@@ -13,7 +13,7 @@
                 <form action="" class="row mb-3 p-2">
 
                     <div class="mb-3 col-lg-">
-                        <label for="email" class="form-label">Email</label>
+                        <label id="email" for="email" class="form-label">Email</label>
                         <input type="email" name="email" id="email" class="form-control">
                     </div>
 
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="col mb-3">
-                        <button type="submit" class="btn btn-primary form-control">Sign in </button>
+                        <button type="submit" class="btn btn-primary form-control" @onclick="Connect">Sign in </button>
                     </div>
 
                 </form>
@@ -51,6 +51,11 @@
     </div>
 </div>
 @code {
-
+    
+    private void Connect()
+        {
+            ConnectionDB connectionDB = new ConnectionDB();
+            connectionDB.OpenConnection();
+        }
 }
 
