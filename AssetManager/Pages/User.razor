@@ -1,0 +1,55 @@
+@page "/user"
+
+
+@*
+    To Do:
+        - create a form 
+        - create an input id, first name, last name, phone number, email, deleted
+        - create Add/Submit and Reset button
+*@
+
+
+<div class="main h-100">
+    <div class="container-fluid h-100 ">
+
+        <form class="h-100 overflow-auto">
+
+            <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input type="number" name="id" id="id" class="form-control" min="1"/>
+            </div>
+            
+            <div class="mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" name="first_name" id="first_name" />
+            </div>
+            
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="last_name" id="last_name" />
+            </div>
+            
+            <div class="mb-3">
+                <label for="phone_number" class="form-label">Phone Number</label>
+                <input type="tel" name="phone_number" id="phone_number" class="form-control" pattern="[0-9]+" />
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="email" />
+             </div>
+
+             <div class="mb-3">
+                <button type="button" class="btn btn-primary" >Add</button>
+                <button type="button" class="btn btn-primary" >Reset</button>
+             </div>
+
+        </form>
+
+
+        <table class="table">
+
+        </table>
+
+    </div>
+</div>

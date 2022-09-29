@@ -1,0 +1,47 @@
+@page "/Maintenance"
+
+@*
+    To DO:
+        - create a form
+        - create input id (Number), Maintenance status id (), date out and in (date), description(text area)
+        - create Add/Submit and Reset button
+*@
+
+<div class="main h-100" >
+    <div class="container h-100">
+
+        <form class="h-100 overflow-auto">
+            <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input type="number" name="id" id="id" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="date_out" class="form-label">Date Out</label>
+                <input type="date" class="form-control" name="date_out" id="date_out" />
+            </div>
+
+            <div class="mb-3">
+                <label for="date_in" class="form-label">Date In</label>
+                <input type="date" class="form-control" name="date_in" id="date_in" />
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea  class="form-control overflow-auto" id="description" name="description" rows="5" placeholder="write something" maxlength="159"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-primary">Reset</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+
+@code {
+
+}
