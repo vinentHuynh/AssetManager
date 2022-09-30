@@ -1,6 +1,10 @@
-﻿@page "/login"
+﻿@page "/login" 
+@using AssetManager.Classes
+@inject NavigationManager NavigationManager
+@inject CustomAuthenticationProvider AuthStateProvider
 
-<div class="main d-flex align-items-center " style="height: 100vh;">
+<EditForm Model="userModel" OnValidSubmit="SuccessfulLogin">
+    <div class="main d-flex align-items-center " style="height: 100vh;">
 
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 border border-3 rounded-5 mx-2">
@@ -14,12 +18,12 @@
 
                     <div class="mb-3 col-lg-">
                         <label id="email" for="email" class="form-label">Email</label>
-                        <input type="email" name="email" id="email" class="form-control">
+                        <input type="email" name="email" id="email" @bind-value="userModel.Name" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" id="password" class="form-control">
+                        <input type="password" name="password" id="password" @bind-value="userModel.Password" class="form-control">
                     </div>
 
                     <!--  -->
@@ -50,7 +54,21 @@
         </div>
     </div>
 </div>
+</EditForm>
+
+
 @code {
+    private UserModel userModel;
+
+    private async void SuccessfulLogin() {
+        var success = userModel.LoginValidate(out string token);
+
+        if (!success)
+            return;
+
+        await AuthStateProvider.Login(token);
+        NavigationManager.NavigateTo("/Admin");
+    }
     
     private void Connect()
         {
