@@ -22,14 +22,15 @@ namespace AssetManager.Classes
                 {
                     var claims = new[] { new Claim(ClaimTypes.Name, "testuser") };
                     identity = new ClaimsIdentity(claims, "Server Authentication");
+                    return new AuthenticationState(new ClaimsPrincipal(identity));
                 }
             }
-            catch (HttpRequestException e)
+            catch (Exception e)
             {
                 Console.WriteLine("Request failed." + e.ToString());
             }
 
-            return new AuthenticationState(new ClaimsPrincipal(identity));
+            return new AuthenticationState(new ClaimsPrincipal());
         }
 
         public async Task Login(string token)

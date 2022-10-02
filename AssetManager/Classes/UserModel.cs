@@ -17,7 +17,7 @@ namespace AssetManager.Classes
 
         public bool LoginValidate(out string token)
         {
-            if (Name.Equals("admin") && Password.Equals("password"))
+            if (Name.Equals("admin@gmail.com") && Password.Equals("password"))
             {
                 token = "1";
                 return true;

@@ -1,73 +1,44 @@
 ﻿@page "/login" 
 @using AssetManager.Classes
+@using System.ComponentModel.DataAnnotations
 @inject NavigationManager NavigationManager
 @inject CustomAuthenticationProvider AuthStateProvider
 
-<EditForm Model="userModel" OnValidSubmit="SuccessfulLogin">
-    <div class="main d-flex align-items-center " style="height: 100vh;">
-
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 border border-3 rounded-5 mx-2">
-
-            <div class="col" id="sam-head">
-                <a href="#"><img src="/Resources/Images/sam_head.svg" alt="" width="200"/></a>
-            </div>
-
-            <div class="col d-lg-flex align-items-center">
-                <form action="" class="row mb-3 p-2">
-
-                    <div class="mb-3 col-lg-">
-                        <label id="email" for="email" class="form-label">Email</label>
-                        <input type="email" name="email" id="email" @bind-value="userModel.Name" class="form-control">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" id="password" @bind-value="userModel.Password" class="form-control">
-                    </div>
-
-                    <!--  -->
-
-                    <div class="row mb-3">
-
-                        <div class="col">
-
-                            <div class="form-check form-switch">
-                                <input type="checkbox" name="" id="view-password" class="form-check-input">
-                                <label for="view-password" class="form-check-label">View password</label>
-                            </div>
-
-                        </div>
-
-                        <div class="col text-end">
-                            <p>Not user ? <a href="" class="text-decoration-none">Guest</a></p>
-                        </div>
-
-                    </div>
-
-                    <div class="col mb-3">
-                        <button type="submit" class="btn btn-primary form-control" @onclick="Connect">Sign in </button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
+<EditForm Model="@userModel" OnValidSubmit="@SuccessfulLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+ 
+    <div class="form-group">
+        <label>Username</label>
+        <InputText id="email" @bind-Value="userModel.Name" class="form-control" />
     </div>
-</div>
+    <div class="form-group">
+        <label>Password</label>
+        <InputText id="password" type="password" @bind-Value="userModel.Password" class="form-control" />
+    </div>
+    <div class="form-group mt-1">
+        <button type="submit" class="btn btn-primary w-100">Login Now</button>
+    </div>
 </EditForm>
 
 
 @code {
-    private UserModel userModel;
+    public UserModel userModel = new UserModel();
 
-    private async void SuccessfulLogin() {
+    public async Task SuccessfulLogin() {
         var success = userModel.LoginValidate(out string token);
 
         if (!success)
-            return;
+            Console.WriteLine("Request failed.");
+
 
         await AuthStateProvider.Login(token);
-        NavigationManager.NavigateTo("/Admin");
+        NavigationManager.NavigateTo("/Admin");   
+    }
+
+    public async void logout(){
+        await AuthStateProvider.Logout();
+        NavigationManager.NavigateTo("/");
     }
     
     private void Connect()
