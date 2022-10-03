@@ -4,6 +4,11 @@
 @inject NavigationManager NavigationManager
 @inject CustomAuthenticationProvider AuthStateProvider
 
+@*
+TO-DO
+    -format and logo
+*@
+
 <EditForm Model="@userModel" OnValidSubmit="@SuccessfulLogin">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -33,7 +38,8 @@
 
 
         await AuthStateProvider.Login(token);
-        NavigationManager.NavigateTo("/Admin");   
+        NavigationManager.NavigateTo("/Admin");
+        Connect();
     }
 
     public async void logout(){

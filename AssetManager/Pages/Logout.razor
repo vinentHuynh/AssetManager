@@ -1,0 +1,15 @@
+﻿@page "/Logout"
+@using AssetManager.Classes
+@inject NavigationManager NavigationManager
+@inject CustomAuthenticationProvider AuthStateProvider
+
+<div class="loader loader-bouncing"><span>Logging out...</span></div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await AuthStateProvider.Logout();
+        NavigationManager.NavigateTo("/Login");
+    }
+
+}
