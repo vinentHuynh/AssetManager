@@ -45,6 +45,8 @@
 }
 
 
+
+
 .menu-content div {
     /*border: 2px solid black;*/
     box-shadow: 2px 2px 5px grey;
@@ -60,18 +62,22 @@
 
 .menu-content p {
     height: 100%;
-/*    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;*/
-}
-.menu-content p NavLink{
-    background-color: blue;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+  
+}
+
+::deep .nav-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    color: black;
+    font-size: 2em;
 }
 
 .view-asset {
