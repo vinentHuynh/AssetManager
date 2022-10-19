@@ -1,8 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 using System.Data;
 namespace AssetManager
@@ -27,7 +24,7 @@ namespace AssetManager
             con = new SqlConnection(ConnectionString);
             con.Open();
         }
-
+       
 
         public void CloseConnection()
         {
@@ -41,6 +38,7 @@ namespace AssetManager
             object dataum = ds.Tables[0];
             return dataum;
         }
+
         public void ExecuteQueries(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
