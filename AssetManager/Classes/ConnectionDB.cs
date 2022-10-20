@@ -30,15 +30,15 @@ namespace AssetManager
         {
             con.Close();
         }
-        public object ShowDataInGridView(string Query_)
+        public DataSet ShowDataInGridView(string Query_)
         {
             SqlDataAdapter dr = new SqlDataAdapter(Query_, ConnectionString);
             DataSet ds = new DataSet();
             dr.Fill(ds);
-            object dataum = ds.Tables[0];
-            return dataum;
+            return ds;
+            
         }
-
+        
         public void ExecuteQueries(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

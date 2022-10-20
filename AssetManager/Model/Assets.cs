@@ -29,33 +29,6 @@ namespace AssetManager.Model
         public bool deleted { get; set; }
 
 
-        public List<string> getAssets(string query)
-        {
-            ConnectionDB connectionDB = new ConnectionDB();
-            connectionDB.OpenConnection();
-            //string query = "SELECT * from " + currentTable;
-            //bool flag = false;
-            //if (currentTable == "dbo.asset")
-            //{
-            //    query += " where deleted = 0";
-            //    flag = true;
-
-            //}
-
-            //this.dgvAssets.DataSource = connectionDB.ShowDataInGridView(query);
-            SqlDataReader dr = connectionDB.DataReader(query);
-
-            dr.Read();
-            var columns = new List<string>();
-            columns.Add("");
-            for (int i = 0; i < dr.FieldCount; i++)
-            {
-                columns.Add(dr.GetName(i));
-            }
-            return columns;
-        }
-
-
-    }
+       
 
 }
