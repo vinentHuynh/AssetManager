@@ -29,6 +29,6 @@ namespace AssetManager.Model
         public bool deleted { get; set; }
 
 
-       
+    }
 
 }
