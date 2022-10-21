@@ -1,6 +1,7 @@
 @page "/AssetFull"
 
-
+@using AssetManager.Model
+@inject AssetService AssetService
 
 <div class=" main">
 
@@ -340,3 +341,12 @@
     </div>
 
 </div>
+
+@*@code {
+    private Asset asset;
+
+    protected override async Task OnInitializedAsync() {
+        asset = await AssetService.GetAssetById(1);
+    }
+}
+*@

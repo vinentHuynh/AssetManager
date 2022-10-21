@@ -68,6 +68,7 @@
       <Folder Include="Classes\" />
     </ItemGroup>
     <ItemGroup>
+      <PackageReference Include="FastMember" Version="1.5.0" />
       <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
 
       <None Remove="Images\" />
