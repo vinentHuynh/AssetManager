@@ -11,9 +11,22 @@
     <div class="container h-100">
 
         <form class="h-100 overflow-auto">
+
             <div class="mb-3">
-                <label for="id" class="form-label">ID</label>
-                <input type="number" name="id" id="id" class="form-control"/>
+                <label for="id" class="form-label">Asset ID</label>
+                <input type="number" name="id" id="id" class="form-control" min="0"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="asset-name" class="form-label">Asset Name</label>
+                <select class="form-select form-select" id="asset-name" name="asset-name">
+                    
+                    <option value="">--Please choose an option--</option>
+                    <option value="name1">Name 1</option>
+                    <option value="name2">Name 2</option>
+                    <option value="name3">Name 3</option>
+                    <option value="name4">Name 4</option>
+                </select>
             </div>
 
             <div class="mb-3">
@@ -28,7 +41,7 @@
             
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea  class="form-control overflow-auto" id="description" name="description" rows="5" placeholder="write something" maxlength="159"></textarea>
+                <textarea  class="form-control overflow-auto" id="description" name="description" rows="5" placeholder="Write something" maxlength="159"></textarea>
             </div>
 
             <div class="mb-3">

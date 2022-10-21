@@ -47,11 +47,23 @@
     </ItemGroup>
 
     <ItemGroup>
+
+		
       <None Remove="Images\" />
       <None Remove="Classes\" />
       <None Remove="Microsoft.Data.SqlClient" />
+
+      <AndroidResource Remove="Images\**" />
+      <Compile Remove="Images\**" />
+      <Content Remove="Images\**" />
+      <EmbeddedResource Remove="Images\**" />
+      <MauiXaml Remove="Images\**" />
+      <None Remove="Images\**" />
+    
     </ItemGroup>
+
     <ItemGroup>
+
       <Folder Include="Images\" />
     </ItemGroup>
     <ItemGroup>
@@ -65,5 +77,8 @@
       <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.9" />
       <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.9" />
       <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
+
+      <None Remove="Images\" />
+
     </ItemGroup>
 </Project>

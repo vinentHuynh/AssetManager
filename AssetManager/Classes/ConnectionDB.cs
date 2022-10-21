@@ -1,8 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 using System.Data;
 namespace AssetManager
@@ -27,20 +24,21 @@ namespace AssetManager
             con = new SqlConnection(ConnectionString);
             con.Open();
         }
-
+       
 
         public void CloseConnection()
         {
             con.Close();
         }
-        public object ShowDataInGridView(string Query_)
+        public DataSet ShowDataInGridView(string Query_)
         {
             SqlDataAdapter dr = new SqlDataAdapter(Query_, ConnectionString);
             DataSet ds = new DataSet();
             dr.Fill(ds);
-            object dataum = ds.Tables[0];
-            return dataum;
+            return ds;
+            
         }
+        
         public void ExecuteQueries(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
