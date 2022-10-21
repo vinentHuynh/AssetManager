@@ -65,9 +65,17 @@
     <ItemGroup>
 
       <Folder Include="Images\" />
-      <Folder Include="Classes\" />
     </ItemGroup>
     <ItemGroup>
+      <MauiImage Include="wwwroot\imgs\sam_head.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="wwwroot\imgs\sam_head.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.9" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.9" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.9" />
       <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
 
       <None Remove="Images\" />

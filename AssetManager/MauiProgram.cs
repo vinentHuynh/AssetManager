@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
 using AssetManager.Data;
+using AssetManager.Classes;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AssetManager;
 
@@ -21,6 +23,10 @@ public static class MauiProgram
 #endif
 		
 		builder.Services.AddSingleton<WeatherForecastService>();
+
+		builder.Services.AddAuthorizationCore();
+		builder.Services.AddScoped<CustomAuthenticationProvider>();
+		builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthenticationProvider>());
 
 		return builder.Build();
 	}
