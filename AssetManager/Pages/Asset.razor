@@ -16,9 +16,9 @@
 
 
 
-<div class="container-sm table-responsive">
+<div class="container-sm table-responsive" style="margin= 0">
 
-    <div class="table-responsive ">
+    <div class=" table-responsive ">
         <table class="table table-hover table-bordered ">
 
             <thead class="table-dark">
@@ -37,23 +37,20 @@
 
 
             <tbody class="table-group-divider">
-                      
 
-                    
-                            @foreach (DataRow dr in dt.Rows)
-                            {
-                                <tr>
-                                @foreach (var item in dr.ItemArray)
-                                {
-                                    <td>
-                                    @item   
-                                    </td>
+                @foreach (DataRow dr in dt.Rows)
+                {
+                    <tr>
+                    @foreach (var item in dr.ItemArray)
+                    {
+                        <td>
+                            @item   
+                        </td>
                                    
-                                }
-                                </tr>
-                            }
-                   
-                
+                    }
+                    </tr>
+                }
+
             </tbody>
 
 
@@ -70,14 +67,11 @@
 @code {
     private ConnectionDB connection = new ConnectionDB();
     DataTable dt = new DataTable();
-    List<string> columnName = new List<string>();
+
     protected override void OnInitialized()
     {
-
         connection.OpenConnection();
         dt = connection.ShowDataInGridView("select * from dbo.asset").Tables[0];
-
-       
 
     }
 }
