@@ -39,7 +39,7 @@ namespace AssetManager
             
         }
         
-        public void ExecuteQueries(string Query_)
+        /*public void ExecuteQueries(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
             cmd.ExecuteNonQuery();
@@ -103,7 +103,7 @@ namespace AssetManager
         }
 
 
-
+*/
 
 
 
