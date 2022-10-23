@@ -1,92 +1,59 @@
-﻿* {
-    
+* {
+    margin: 0;
     box-sizing: border-box;
 }
 
-.body {
-    height:100%;
-    width:100%;
-}
-
 .main {
-    height: 90vh;
     width: 100%;
-    /*border: 2px solid black;*/
+    height: 100%;
+
+ 
     display: flex;
     align-items: center;
+  
+    padding: 0;  
 }
 
-.container {
-    height: 80vh;
+.main-content {
+    height: 90vh;
     width: 100%;
-    /*border: 2px solid green;*/
+    padding: 0;
+  
 }
 
 .menu {
     height: 100%;
     width: 100%;
-    /*border: 2px solid yellow;*/
-    padding: 0;
-    margin: 0;
+  
 }
 
 .menu-content {
     height: 100%;
+    width:100%;
+
     display: grid;
-    width: 100%;
     grid-template-columns: 100%;
-    grid-template-areas: "view-asset" "maintenance"
-        "request" "system" "user"
-        "help" "settings" "exit";
-  /*  border: 2px solid red;*/
-    overflow-y: auto;
-    padding: 1.5em ;
-    margin: 0;
-}
-
-
-
-
-.menu-content div {
-    /*border: 2px solid black;*/
-    box-shadow: 2px 2px 5px grey;
-    margin: 1em;
-    border-radius: 10px;
-    transition: all .4s ease
-}
-
-.menu-content div:hover {
-    transform: scale(1.1);
-    transition: all .4s ease;
-}
-
-.menu-content p {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    grid-template-areas: 
+        "asset" "maintenance"
+        "request" "system"
+        "user"
+        "helps" "settings" "exit";
+    
   
+    
+
+    overflow-x: hidden;
+
 }
 
-::deep .nav-link{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    height: 100%;
-    width: 100%;
-    color: black;
-    font-size: 2em;
-}
 
 .view-asset {
-    grid-area: view-asset;
+    grid-area: asset;
 }
 
 .maintenance {
-    grid-area: maintenance ;
-}
+    grid-area: maintenance;
+} 
 
 .request {
     grid-area: request;
@@ -97,52 +64,69 @@
 }
 
 .user {
-    grid-area:user;
+    grid-area: user;
 }
 
 .help {
-    grid-area:help;
+    grid-area: helps;
 }
 
 .settings {
-    grid-area:settings;
+    grid-area: settings;
 }
 
 .exit {
-    grid-area:exit;
+    grid-area: exit;
+}
+
+
+.menu-content div {
+   
+    margin: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.menu-content div a {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    word-break: break-word;
+    text-decoration: none;
+    padding:.1em;
+
+   
+}
+
+.menu-content div:hover {
+    transition: all 0.3s ease;
+    transform: scale(1.1);
+    color: inherit;
+
 }
 
 
 
-@media  (min-width: 576px) {
-
-    .menu-content {
-       
-        grid-template-columns: 25% 25% 25% 25%;
-        grid-template-areas: 
-            "view-asset view-asset maintenance maintenance" 
-            "request request system system" 
-            "user user user user"
-            "help settings settings exit";
-       margin: 0;
-        padding: 2em 
-    }
-
-    .menu {
-    }
-}
 
 
-@media  (min-width: 768px) {
+@media screen and (min-width: 768px) {
     .menu-content {
         grid-template-columns: 25% 25% 25% 25%;
         grid-template-areas:
-            "view-asset view-asset maintenance maintenance"
+            "asset asset maintenance maintenance"
             "request request system system"
             "user user user user"
-            "help settings settings exit";
-        
-        padding: 2em;
+            "helps settings settings exit";
+        padding: 0;
     }
 
     .menu {
@@ -151,18 +135,19 @@
 }
 
 
-@media (min-width: 1028px){
+@media screen and (min-width: 1028px){
     .menu-content {
         grid-template-columns: 25% 25% 25% 25%;
         grid-template-areas:
-            "view-asset view-asset maintenance maintenance"
+            "asset asset maintenance maintenance"
             "request request system system"
             "user user user user"
-            "help settings settings exit";
-   
-        padding: 2em 6em;
+            "helps settings settings exit";
+        padding: 2em 5em;
     }
 
     .menu {
     }
 }
+
+

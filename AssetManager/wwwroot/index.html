@@ -23,6 +23,10 @@
     </div>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
+    <script>
+        function addToLocalStorage(key, value) { localStorage[key] = value; }
+        function readLocalStorage(key) { return localStorage[key]; }
+    </script>
 
 </body>
 

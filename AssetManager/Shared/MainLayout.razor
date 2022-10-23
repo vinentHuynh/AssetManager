@@ -1,16 +1,25 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JsRuntime
 
-<div class="page">
+<div class="page @GetCssClass()">
 	<div class="sidebar">
 		<NavMenu />
 	</div>
 
 	<main>
 		<div class="top-row px-4">
+
+			Theme 
+			<select @onchange="ChangingTheme" class="ml-3">
+				@foreach (var theme in themes)
+				{
+					<option selected="@isSelectedTheme(theme)" value="@theme">@theme</option>
+				}
+			</select>
 			<a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
 			<AuthorizeView>
 				<Authorized>
-					<a href="/Logout">Logout</a>
+					<a href="/Logout" style="color: black;"tyle>Logout</a>
 				</Authorized>
 			</AuthorizeView>
 		</div>
@@ -21,4 +30,44 @@
 		</article>
 	</main>
 </div>
+
+
+@code {
+	private string selectedTheme = "Light";
+
+	@*create a list*@
+	private List<string> themes = new List<string> { "Light", "Dark" };
+	private readonly string keyTheme = "theme";
+
+	private string GetCssClass(){
+
+		if (selectedTheme == "Light"){
+			return "nothing";
+		} else {
+			return "dark-mode";
+		}
+	}
+	
+	protected override async Task OnInitializedAsync()
+	{
+		var theFromLocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", keyTheme);
+		if (!string.IsNullOrEmpty(theFromLocalStorage)) 
+		{
+			selectedTheme = theFromLocalStorage;
+		}
+	}
+
+
+	private bool isSelectedTheme(string theme){
+		return theme == selectedTheme;
+	}
+
+
+
+	private async Task ChangingTheme(ChangeEventArgs e)
+	{
+		selectedTheme = e.Value.ToString();
+		await JsRuntime.InvokeVoidAsync("addToLocalStorage", keyTheme, selectedTheme);
+	}
+}
 

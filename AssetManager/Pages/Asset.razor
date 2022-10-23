@@ -1,4 +1,6 @@
 @page "/Asset"
+@page "/Admin/Asset"
+@inject IJSRuntime JsRuntime
 @attribute [Authorize]
 @using Microsoft.Data.SqlClient
 @using System.Data
@@ -77,7 +79,10 @@
         connection.OpenConnection();
         dt = connection.ShowDataInGridView("select * from dbo.asset").Tables[0];
 
-       
+
 
     }
+    
+
+
 }
