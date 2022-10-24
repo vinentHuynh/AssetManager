@@ -14,10 +14,11 @@ public class AssetService
         string query = "SELECT * FROM asset WHERE asset.id = " + id.ToString() + " AND asset.deleted = 0";
         SqlDataReader dr = connectionDB.DataReader(query);
 
-        connectionDB.CloseConnection();
-
         // map asset record to object
-        return Task.FromResult(MapRowToAsset<Asset>(dr));
+        Asset asset = MapRowToAsset<Asset>(dr);
+
+        connectionDB.CloseConnection();    
+        return Task.FromResult(asset);
     }
 
     public static Asset MapRowToAsset<Asset>(SqlDataReader dr) where Asset : class, new()
@@ -26,17 +27,15 @@ public class AssetService
         var accessor = TypeAccessor.Create(type);
         var members = accessor.GetMembers();
         var asset = new Asset();
+        dr.Read();
 
         for (int i = 0; i < dr.FieldCount; i++)
         {
-            if (!dr.IsDBNull(i))
-            {
-                string fieldName = dr.GetName(i);
+            string fieldName = dr.GetName(i);
 
-                if (members.Any(m => string.Equals(m.Name, fieldName, StringComparison.OrdinalIgnoreCase)))
-                {
-                    accessor[asset, fieldName] = dr.GetValue(i);
-                }
+            if (members.Any(m => string.Equals(m.Name, fieldName, StringComparison.OrdinalIgnoreCase)))
+            {
+                accessor[asset, fieldName] = dr.GetValue(i);
             }
         }
 
