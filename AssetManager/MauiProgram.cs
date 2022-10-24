@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
 using AssetManager.Data;
+using AssetManager.Model;
 
 namespace AssetManager;
 
@@ -21,6 +22,7 @@ public static class MauiProgram
 #endif
 		
 		builder.Services.AddSingleton<WeatherForecastService>();
+		builder.Services.AddSingleton<AssetService>();
 
 		return builder.Build();
 	}
