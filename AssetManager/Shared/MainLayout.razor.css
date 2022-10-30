@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 main {
@@ -38,6 +39,10 @@ main {
     }
 
 @media (max-width: 640.98px) {
+    
+    .page {
+        height: 100vh;
+    }
     .top-row:not(.auth) {
         display: none;
     }
@@ -49,11 +54,13 @@ main {
     .top-row ::deep a, .top-row ::deep .btn-link {
         margin-left: 0;
     }
+
 }
 
 @media (min-width: 641px) {
     .page {
         flex-direction: row;
+
     }
 
     .sidebar {

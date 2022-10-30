@@ -65,6 +65,8 @@
     <ItemGroup>
 
       <Folder Include="Images\" />
+
+      <Folder Include="wwwroot\js\" />
     </ItemGroup>
     <ItemGroup>
       <MauiImage Include="wwwroot\imgs\sam_head.svg" />

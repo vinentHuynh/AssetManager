@@ -1,0 +1,10 @@
+.main {
+    //overflow-y: hidden;
+    //display: flex;
+}
+
+.tt {
+    overflow-y: auto;
+    height: 100%;
+
+}

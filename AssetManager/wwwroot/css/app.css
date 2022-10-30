@@ -9,6 +9,7 @@
     --link: #0366d6; /* #0366d6*/
 }
 
+
 /*added */
 .dark-mode {
     --background: #2d2d2d; /*Very dark gray (mostly black)*/
@@ -36,7 +37,7 @@ main {
     background-color: var(--background);
     color: var(--font-color);
 }
-/**/
+/*--------*/
 
 h1:focus {
     outline: none;
@@ -46,6 +47,14 @@ a, .btn-link {
     color: var(--link);
 }
 
+.brightness {
+    background-color: black;
+    font-weight: bold;
+}
+
+.fontWeight {
+    font-weight: 300;
+}
 
 
 .alert-secondary { /*added*/
