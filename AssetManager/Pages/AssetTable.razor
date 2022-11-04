@@ -4,24 +4,30 @@
 @attribute [Authorize]
 @using Microsoft.Data.SqlClient
 @using System.Data
+@inject NavigationManager NavigationManager
 
-
-<div class="main">
-<h1 class="text-center">Asset</h1>
+<div class="main container-sm">
+   <h1 class="text-center"> Assets</h1>
+    <div class="input-group mb-3 align justify-content-end">
+        <input type="text" placeholder="Search"/>
+        <button type="submit" class="btn btn-primary "@onclick="searchFilter" id="search">Search</button>
+    </div>
 </div>
+
+
 @*To Do:
     - create a table
-    - create a caption
+    - create a caption[]
     - create a table head
     - add header cells
     - create a table body
 
 *@
 
-
-
+    
 <div class="container-sm table-responsive">
-
+    
+     
     <div class="table-responsive ">
         <table class="table table-hover table-bordered ">
 
@@ -30,7 +36,7 @@
                 <tr>
                     @for (int i =0; i < dt.Columns.Count;i++)
                     {
-                        <th> @dt.Columns[i].ColumnName</th> 
+                        <th > @dt.Columns[i].ColumnName</th> 
                         
                     }
                    
@@ -44,7 +50,7 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
-                    <tr>
+                    <tr @onclick="fullAsset">
                     @foreach (var item in dr.ItemArray)
                     {
                         <td>
@@ -71,15 +77,18 @@
 @code {
     private ConnectionDB connection = new ConnectionDB();
     DataTable dt = new DataTable();
-
+    string search = "";
+    string query = "select id,name,description,manufacturer,model from dbo.asset";
     protected override void OnInitialized()
     {
         connection.OpenConnection();
-        dt = connection.ShowDataInGridView("select * from dbo.asset").Tables[0];
+        dt = connection.ShowDataInGridView(query).Tables[0];
 
 
     }
+    void fullAsset(){
+        NavigationManager.NavigateTo("/AssetFull");
+    }
     
-
 
 }
