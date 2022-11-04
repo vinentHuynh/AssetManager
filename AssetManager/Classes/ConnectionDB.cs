@@ -38,7 +38,14 @@ namespace AssetManager
             return ds;
             
         }
-        
+
+        public SqlDataReader DataReader(string Query_)
+        {
+            SqlCommand cmd = new SqlCommand(Query_, con);
+            SqlDataReader dr = cmd.ExecuteReader();
+            return dr;
+        }
+
         /*public void ExecuteQueries(string Query_)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);
@@ -64,12 +71,7 @@ namespace AssetManager
 
             return count;
         }
-        public SqlDataReader DataReader(string Query_)
-        {
-            SqlCommand cmd = new SqlCommand(Query_, con);
-            SqlDataReader dr = cmd.ExecuteReader();
-            return dr;
-        }
+        
         public DataTable DataAdapter(string Query_, string user)
         {
             SqlCommand cmd = new SqlCommand(Query_, con);

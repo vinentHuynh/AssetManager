@@ -24,5 +24,4 @@ public class Asset
     public string photo_url { get; set; }
     public string path { get; set; }
     public bool? borrow { get; set; }
-    public bool deleted { get; set; }
 }
