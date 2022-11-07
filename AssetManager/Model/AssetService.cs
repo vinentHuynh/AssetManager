@@ -17,7 +17,7 @@ public class AssetService
         // map asset record to object
         Asset asset = MapRowToAsset<Asset>(dr);
 
-        connectionDB.CloseConnection();    
+        //connectionDB.CloseConnection();    
         return Task.FromResult(asset);
     }
 

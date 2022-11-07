@@ -2,6 +2,8 @@
 
 using AssetManager.Classes;
 using Microsoft.AspNetCore.Components.Authorization;
+using AssetManager.Model;
+
 
 namespace AssetManager;
 
@@ -25,7 +27,7 @@ public static class MauiProgram
 		builder.Services.AddAuthorizationCore();
 		builder.Services.AddScoped<CustomAuthenticationProvider>();
 		builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthenticationProvider>());
-
+		builder.Services.AddSingleton<Asset>();
 		return builder.Build();
 	}
 }

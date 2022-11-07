@@ -1,16 +1,18 @@
 @page "/Asset"
 @page "/Admin/Asset"
+
 @inject IJSRuntime JsRuntime
 @attribute [Authorize]
 @using Microsoft.Data.SqlClient
 @using System.Data
 @inject NavigationManager NavigationManager
+@inject Model.Asset Assets
 
 <div class="main container-sm">
    <h1 class="text-center"> Assets</h1>
     <div class="input-group mb-3 align justify-content-end">
-        <input type="text" placeholder="Search"/>
-        <button type="submit" class="btn btn-primary "@onclick="searchFilter" id="search">Search</button>
+        <input type="text" placeholder="Search" @bind-value="search"/>
+        <button type="submit" class="btn btn-primary "@onclick="searchFilter">Search</button>
     </div>
 </div>
 
@@ -50,7 +52,7 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
-                    <tr @onclick="fullAsset">
+                    <tr @onclick="fullAsset" >
                     @foreach (var item in dr.ItemArray)
                     {
                         <td>
@@ -87,8 +89,17 @@
 
     }
     void fullAsset(){
+        this.Assets.id = 2;
         NavigationManager.NavigateTo("/AssetFull");
     }
-    void searchFilter(){}
+    void searchFilter()
+    {
+        query = "select id,name,description,manufacturer,model from dbo.asset where name like '" + search + "%'" 
+        + "or id like '" + search + "%'"
+        + "or description like '" + search + "%'" 
+        + "or model like '" + search + "%'" 
+        + "or manufacturer like '" + search + "%'";
+        OnInitialized();
+    }
 
 }

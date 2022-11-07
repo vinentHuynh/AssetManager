@@ -1,10 +1,11 @@
 @page "/AssetFull"
 
+@inject Model.Asset Assets
 @using AssetManager.Model
 @using FastMember
 
 <div class=" main">
-    <h1>Asset @asset.id</h1>
+    <h1>Asset @Assets.id</h1>
 
     <div class="container-fluid">
 
@@ -69,6 +70,6 @@
         fields.Add(new KeyValuePair<string, string>("path", "Path"));
         fields.Add(new KeyValuePair<string, string>("borrow", "Borrowable"));
 
-        asset = await AssetService.GetAssetById(1);
+        asset = await AssetService.GetAssetById(Assets.id);
     }
 }
