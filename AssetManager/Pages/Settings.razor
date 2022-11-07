@@ -20,38 +20,50 @@
           
 
             <div class="mb-3">
-                <label class="form-label">Text size</label>
+                <label class="mb-2 form-label">Text size</label>
                 <select @onchange="ChangeTextSize" class="form-select" >
 
                     @foreach(var item in textSizes){
-                        <option selected="@isSelectedText(item)" value="@item">@item</option>
+                        <option selected="@isTextSizeSelected(item)" value="@item">@item</option>
                     }
                 </select>
                
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Font Weight</label>
-                <input type="range" class="form-range" min="300" max="1000" step="100" @onchange="ChangeFontWeight" />
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label">Brightness</label>
-                <input type="range" class="form-range" min="0" max="100" step="1" @oninput="ChangeBrightness"/>
-
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Text Style</label>
-                <select @onchange="ChangeTextStyle" class="form-select">
+                <label class="mb-2 form-label">Text Style</label>
+                <select @oninput="ChangeTextStyle" class="form-select">
 
                     @foreach (var item in textStyles)
                     {
-                        <option value="@item">@item</option>
+                        <option selected="@isTextStyleSelected(item)" value="@item">@item</option>
                     }
                 </select>
 
             </div>
+
+            <div class="mb-3">
+                <label class="mb-2 form-label">Font Weight</label>
+                <input type="range" value="@get_textWeight" class="form-range" min="300" max="1000" step="100" @onchange="ChangeFontWeight" />
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Brightness</label>
+                <input type="range" value="@get_brightness" class="form-range" min="20" max="100" step="1" @oninput="ChangeBrightness"/>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">Theme</label>
+                <select @onchange="ChangeTheme"  class="form-select">
+                    @foreach (var item in themes) {
+                        <option selected="@isThemeSelected(item)" value="@item">@item</option>
+                    }
+
+                </select>
+            </div>
+
 
 
             <button class="btn btn-primary" @onclick="ResetSetting">Reset</button>
@@ -70,59 +82,53 @@
 
 @code {
 
-   
-    @*--------------------------------------- TEXT SIZE ------------------------------------*@
 
     private List<string> textSizes = new List<string> {"default", "fs-1", "fs-2", "fs-3", "fs-4", "fs-5", "fs-6" };
-
-    @*
-    private string selectedTextSize = "fs-4";
-  
-
-    private string selection (string select)
-    {
-        return select;
-    }
-
-    
-    public void getTextSize(ChangeEventArgs e){
-        Model.Setting.TextSize = e.Value.ToString();
-
-    }
-
-
-    private void  GetTextSize(ChangeEventArgs e){
-        selectedTextSize = e.Value.ToString();
-        Setting.TextSize = e.Value.ToString();
-
-    }
-
-    */
-
-   @*
-    private bool IsSelectedT (string textS){
-
-        foreach (var item in textSizes){
-            if (item == textS) {
-                return true;
-            }
-        }
-        return false;
-    }
-    *@
-
-    private string get_TextSize { get; set; }
+    private List<string> textStyles = new List<string> { "default", "Arial ,sans-serif", "Cambria", "Verdana ,sans-serif", "Noto", "Comic Sans MS, cursive", "Tahoma ,sans-serif", "Trebuchet MS ,sans-serif", "Times New Roman ,serif", "Georgia ,serif", "Garamond serif", " Courier New monospace", " Brush Script MT, cursive", "Poor Story, cursive", "Ubuntu, sans-serif", "Dancing Script, cursive" };
+    private List<string> themes = new List<string> { "light", "dark-mode" };
+    @*--------------------------------------- TEXT SIZE ------------------------------------*@
 
 
     protected override async Task OnInitializedAsync(){
-        var fromLocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", "textSize"); 
+        var textSizeFromLocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", "textSize");
+        var textStyleFromLocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", "fontStyle");
+        var brightnessFromlocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", "brightness");
+        var textWeightFromLocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", "fontWeight");
+        var darkModeFromLocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", "dark-mode");
 
-        if (!string.IsNullOrEmpty(fromLocalStorage)) {
-            get_TextSize = fromLocalStorage;
+        if (!string.IsNullOrEmpty(textSizeFromLocalStorage)) {
+            await JsRuntime.InvokeVoidAsync("textSize", textSizeFromLocalStorage);
+            get_TextSize = textSizeFromLocalStorage;
+        }
 
+        if (!string.IsNullOrEmpty(textStyleFromLocalStorage))
+        {
+            await JsRuntime.InvokeVoidAsync("readFontStyle", textStyleFromLocalStorage);
+            get_textStyle = textStyleFromLocalStorage;
+        }
+
+        if (!string.IsNullOrEmpty(brightnessFromlocalStorage))
+        {
+            await JsRuntime.InvokeVoidAsync("readBrightness", brightnessFromlocalStorage);
+            get_brightness = Convert.ToInt32(brightnessFromlocalStorage);
+        }
+
+        if (!string.IsNullOrEmpty(textWeightFromLocalStorage)) {
+            await JsRuntime.InvokeVoidAsync("readFontWeight", textWeightFromLocalStorage);
+            get_textWeight = Convert.ToInt32(textWeightFromLocalStorage);
+        }
+
+        if (!string.IsNullOrEmpty(darkModeFromLocalStorage))
+        {
+            await JsRuntime.InvokeVoidAsync("readTheme", darkModeFromLocalStorage);
+            get_theme = darkModeFromLocalStorage;
         }
     }
-    private bool isSelectedText (string text){
+
+
+    private string get_TextSize { get; set; }
+
+    private bool isTextSizeSelected (string text){
         return text == get_TextSize;
     }
 
@@ -131,29 +137,57 @@
     }
     /*-------------------------------------------------------------------------*/
 
-    // reset button 
+
+    // font family----------------------------------
+
+    private string get_textStyle { get; set; }
+    private bool isTextStyleSelected(string text)
+    {
+        return text == get_textStyle;
+    }
+
+    private async Task ChangeTextStyle(ChangeEventArgs e)
+    {
+        await JsRuntime.InvokeVoidAsync("readFontStyle", e.Value.ToString());
+    }
+
+    // ----------- end ---------------------
+
+
+    // reset button ---------------
     private async Task ResetSetting(){
         await JsRuntime.InvokeVoidAsync("resetSetting");
     }
-
+    // ----------- end ---------------------
 
     // Brightness
+    private int get_brightness { get; set; } 
     private async Task ChangeBrightness(ChangeEventArgs e){
-        await JsRuntime.InvokeVoidAsync("readBrightness", e.Value);
+        await JsRuntime.InvokeVoidAsync("readBrightness", e.Value.ToString());
     }
 
 
-    // Text font weight
+    // Text font weight ----------------------
+
+    private int get_textWeight { get; set; }
+
     private async Task ChangeFontWeight(ChangeEventArgs e){
-        await JsRuntime.InvokeVoidAsync("readFontWeight", e.Value);
+        await JsRuntime.InvokeVoidAsync("readFontWeight", e.Value.ToString());
     }
 
-    // font family
-     private List<string> textStyles = new List<string> { "default","Arial ,sans-serif", "Verdana ,sans-serif", "Tahoma ,sans-serif", "Trebuchet MS ,sans-serif", "Times New Roman ,serif", "Georgia ,serif", "Garamond serif", " Courier New monospace", " Brush Script MT cursive" };
+    // ---------- end -------------------------
 
-    private async Task ChangeTextStyle(ChangeEventArgs e) {
-        await JsRuntime.InvokeVoidAsync("readTextStyle", e.Value);
+
+    // Dark Mode
+    private string get_theme { get; set; }
+    private bool isThemeSelected(string choice){
+        return choice == get_theme;
     }
+    
+    private async Task ChangeTheme(ChangeEventArgs e) {
+        await JsRuntime.InvokeVoidAsync("readTheme", e.Value.ToString());
+    }
+
 }
 
 
