@@ -1,5 +1,5 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Ubuntu:wght@300;400;500;700&display=swap');
 :root {
     /* light theme*/
     --background: white;
@@ -20,9 +20,13 @@
 }
 
 
+.fontStyle {
+    
+}
+
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
 }
 /*added*/
 .table {
@@ -38,7 +42,9 @@ main {
     color: var(--font-color);
 }
 /*--------*/
+#app {
 
+}
 h1:focus {
     outline: none;
 }
@@ -50,6 +56,7 @@ a, .btn-link {
 .brightness {
     background-color: black;
     font-weight: bold;
+    opacity: 1;
 }
 
 .fontWeight {

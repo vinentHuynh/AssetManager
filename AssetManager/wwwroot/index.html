@@ -13,7 +13,7 @@
 <body class="brightness fontWeight fontStyle">
     <div class="status-bar-safe-area"></div>
 
-    <div id="app">Loading... </div>
+    <div id="app" class="default">Loading... </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -26,7 +26,7 @@
         function addToLocalStorage(key, value) { localStorage[key] = value; }
         function readLocalStorage(key) { return localStorage[key]; }
     </script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
 
 
 </body>
