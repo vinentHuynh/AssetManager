@@ -1,5 +1,6 @@
 ﻿using FastMember;
 using Microsoft.Data.SqlClient;
+using System.Xml;
 
 namespace AssetManager.Model;
 
@@ -35,7 +36,10 @@ public class AssetService
 
             if (members.Any(m => string.Equals(m.Name, fieldName, StringComparison.OrdinalIgnoreCase)))
             {
-                accessor[asset, fieldName] = dr.GetValue(i);
+                if (!dr.IsDBNull(i))
+                {
+                    accessor[asset, fieldName] = dr.GetValue(i);
+                }
             }
         }
 
