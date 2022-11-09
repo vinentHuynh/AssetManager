@@ -6,7 +6,7 @@
 @using Microsoft.Data.SqlClient
 @using System.Data
 @inject NavigationManager NavigationManager
-@inject Model.Asset Assets
+@inject Model.Asset Asset
 
 <div class="main container-sm">
    <h1 class="text-center"> Assets</h1>
@@ -38,11 +38,11 @@
                 <tr>
                     @for (int i =0; i < dt.Columns.Count;i++)
                     {
-                        <th > @dt.Columns[i].ColumnName</th> 
+                        <th> @dt.Columns[i].ColumnName</th> 
                         
                     }
                    
-
+                    <th>all details</th>
                 </tr>
 
             </thead>
@@ -52,14 +52,15 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
-                    <tr @onclick="fullAsset" >
-                    @foreach (var item in dr.ItemArray)
-                    {
-                        <td>
-                            @item   
-                        </td>
+                    <tr>
+                        @foreach (var item in dr.ItemArray)
+                        {
+                            <td>
+                                @item   
+                            </td>
                                    
-                    }
+                        }
+                        <td><button type="button" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-list"></span></button></td>
                     </tr>
                 }
 
@@ -67,7 +68,7 @@
 
 
         </table>
-
+        
     </div>
 
 </div>
@@ -88,8 +89,8 @@
 
 
     }
-    void fullAsset(){
-        this.Assets.id = 2;
+    void fullAsset(object id){
+        this.Asset.id = Int32.Parse(id.ToString());
         NavigationManager.NavigateTo("/AssetFull");
     }
     void searchFilter()

@@ -1,11 +1,11 @@
 @page "/AssetFull"
 
-@inject Model.Asset Assets
+@inject Model.Asset asset
 @using AssetManager.Model
 @using FastMember
 
 <div class=" main">
-    <h1>Asset @Assets.id</h1>
+    <h1>Asset @asset.id</h1>
 
     <div class="container-fluid">
 
@@ -40,7 +40,6 @@
 </div>
 
 @code {
-    Asset asset;
     List<KeyValuePair<string, string>> fields = new List<KeyValuePair<string, string>>();
     static Type type = typeof(Asset);
     TypeAccessor accessor = TypeAccessor.Create(type);
@@ -70,6 +69,6 @@
         fields.Add(new KeyValuePair<string, string>("path", "Path"));
         fields.Add(new KeyValuePair<string, string>("borrow", "Borrowable"));
 
-        asset = await AssetService.GetAssetById(Assets.id);
+        asset = await AssetService.GetAssetById(asset.id);
     }
 }
