@@ -1,13 +1,13 @@
 @page "/User"
 @page "/Admin/User"
 
-@attribute [Authorize]
+@using AssetManager.Classes
+@inject NavigationManager NavigationManager
 
 @*
-    To Do:
-        - create a form 
-        - create an input id, first name, last name, phone number, email, deleted
-        - create Add/Submit and Reset button
+    To Do:      
+        -validation messages
+        -only admin sees id field
 *@
 
 
@@ -16,35 +16,68 @@
 
         <form class="h-100 overflow-auto">
 
-            <div class="mb-3">
-                <label for="id" class="form-label">ID</label>
-                <input type="number" name="id" id="id" class="form-control" min="1"/>
-            </div>
-            
-            <div class="mb-3">
-                <label for="first_name" class="form-label">First Name</label>
-                <input type="text" class="form-control" name="first_name" id="first_name" />
-            </div>
-            
-            <div class="mb-3">
-                <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" class="form-control" name="last_name" id="last_name" />
-            </div>
-            
-            <div class="mb-3">
-                <label for="phone_number" class="form-label">Phone Number</label>
-                <input type="tel" name="phone_number" id="phone_number" class="form-control" pattern="[0-9]+" />
-            </div>
+            <EditForm Model="@user" OnValidSubmit="@CreateUser">
+                <DataAnnotationsValidator/>
+                <ValidationSummary />
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" id="email" />
-             </div>
+                @* <div class="mb-3">
+                    <label for="id" class="form-label">ID</label>
+                    <InputNumber type="number" @bind-Value="user.Id" class="form-control" min="1"/>
+                </div> *@
+            
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <InputText type="text" @bind-Value="user.FirstName" class="form-control" />
+                </div>
+            
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <InputText type="text" @bind-Value="user.LastName" class="form-control" />
+                </div>
+            
+                <div class="mb-3">
+                    <label for="phone_number" class="form-label">Phone Number</label>
+                    <InputText @bind-Value="user.PhoneNumber" class="form-control" pattern="[0-9]+" />
+                </div>
 
-             <div class="mb-3">
-                <button type="button" class="btn btn-primary" >Add</button>
-                <button type="button" class="btn btn-primary" >Reset</button>
-             </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <InputText type="email" @bind-Value="user.Username" class="form-control"  />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <InputText type="password" @bind-Value="user.Password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <button type="submit"  @onclick="ModalShow" class="btn btn-primary">Add</button>
+                    <button type="button" @onclick="RefreshPage" class="btn btn-primary">Reset</button>
+                    @if (showModal)
+                    {
+                        <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">                                    
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Confirm action</h4>
+                                        <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>New account created!</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn" @onclick="@ModalCancel">OK</button>
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <hr />
+                    
+                </div>
+            </EditForm>       
+
+             
 
         </form>
 
@@ -54,7 +87,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            @*<th>ID</th>*@
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Phone Number</th>
@@ -64,11 +97,11 @@
 
                     <tbody>
                         <tr>
-                            <td>duik</td>
-                            <td>duik</td>
-                            <td>duik</td>
-                            <td>duik</td>
-                            <td>duik</td>
+                            @*<td>@user.Id</td>*@                            
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@user.PhoneNumber</td>
+                            <td>@user.Username</td>
                         </tr>
                     </tbody>
 
@@ -78,3 +111,27 @@
         </div>
     </div>
 </div>
+
+@code{
+    UserModel user = new UserModel();
+    public void CreateUser(){
+        ConnectionDB connection = new ConnectionDB();
+        connection.OpenConnection();
+        string query = "INSERT INTO dbo.[user](first_name, last_name, phone_number, email, password, role) VALUES('"
+            + user.FirstName + "', '" + user.LastName + "', '" + user.PhoneNumber + "', '" + user.Username + "', '" + user.Password + "', 1)";
+        connection.DataReader(query);
+    }
+
+    public void RefreshPage(){
+
+        NavigationManager.NavigateTo("/User", true);
+
+    }
+
+    bool showModal = false;
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false; 
+
+
+
+}
