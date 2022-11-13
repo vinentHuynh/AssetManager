@@ -11,8 +11,8 @@ public class Asset
     public string manufacturer { get; set; }
     public string model { get; set; }
     public string serial_number { get; set; }
-    public DateTime purchase_date { get; set; }
-    public DateTime warranty_expiration { get; set; }
+    public DateTime? purchase_date { get; set; }
+    public DateTime? warranty_expiration { get; set; }
     public int estimated_life { get; set; }
     public double purchase_price { get; set; }
     public string comments { get; set; }

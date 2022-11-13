@@ -1,5 +1,6 @@
 ﻿using FastMember;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Xml;
 
 namespace AssetManager.Model;
@@ -18,7 +19,43 @@ public class AssetService
         // map asset record to object
         Asset asset = MapRowToAsset<Asset>(dr);
 
-        //connectionDB.CloseConnection();    
+        return Task.FromResult(asset);
+    }
+     
+    public static Task<Asset> EditAsset(Asset asset)
+    {
+        ConnectionDB connectionDB = new ConnectionDB();
+        connectionDB.OpenConnection();
+
+        string purchaseDate = asset.purchase_date != null ? ("purchase_date = CAST('" + asset.purchase_date + "' AS DATETIME), ") : "purchase_date = NULL, ";
+        string warrantyExp = asset.warranty_expiration != null ? ("warranty_expiration = CAST('" + asset.warranty_expiration + "' AS DATETIME), ") : "warranty_expiration = NULL, ";
+
+        string query =
+            "UPDATE asset " +
+            "SET " +
+                "name = '" + asset.name + "', " +
+                "description = '" + asset.description + "', " +
+                "location_id = " + asset.location_id + ", " +
+                "status_id = " + asset.status_id + ", " +
+                "type_id = " + asset.type_id + ", " +
+                "manufacturer = '" + asset.manufacturer + "', " +
+                "model = '" + asset.model + "', " +
+                "serial_number = '" + asset.serial_number + "', " +
+                purchaseDate +
+                warrantyExp +
+                "estimated_life = '" + asset.estimated_life + "', " +
+                "purchase_price = '" + asset.purchase_price + "', " +
+                "comments = '" + asset.comments + "', " +
+                "item_count = '" + asset.item_count + "', " +
+                "created_by = '" + asset.created_by + "', " +
+                "updated_by = '" + asset.updated_by + "', " +
+                "last_updated = CAST('" + asset.last_updated + "' AS DATETIME), " +
+                "photo_url = '" + asset.photo_url + "', " +
+                "path = '" + asset.path + "', " +
+                "borrow = '" + asset.borrow + "'" +
+            "WHERE id = " + asset.id;
+        connectionDB.DataReader(query);
+
         return Task.FromResult(asset);
     }
 
