@@ -10,7 +10,12 @@
 
 <div class="main container-sm">
    <h1 class="text-center"> Assets</h1>
+   
     <div class="input-group mb-3 align justify-content-end">
+        <div class="mx-3">
+            <button type="submit" class=" btn btn-primary " @onclick="addAsset" >Add Asset</button>
+        </div>
+     
         <input type="text" placeholder="Search" @bind-value="search"/>
         <button type="submit" class="btn btn-primary "@onclick="searchFilter">Search</button>
     </div>
@@ -106,6 +111,10 @@
 
     void deleteAsset(object id){
         this.Asset.id = Int32.Parse(id.ToString());
+    }
+    void addAsset()
+    {
+        NavigationManager.NavigateTo("/AssetAdd");
     }
 
     void searchFilter()

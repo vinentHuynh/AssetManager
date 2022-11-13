@@ -58,7 +58,38 @@ public class AssetService
 
         return Task.FromResult(asset);
     }
+    public static Task<Asset> AddAsset(Asset asset)
+    {
+        ConnectionDB connectionDB = new ConnectionDB();
+        connectionDB.OpenConnection();
 
+        string query = "INSERT INTO asset VALUES(" +
+                
+                "'" + asset.name + "', " +
+                "'" + asset.description + "', " +
+                asset.location_id + ", " +
+                asset.status_id + ", " +
+                asset.type_id + ", " +
+                "'" + asset.manufacturer + "', " +
+                "'" + asset.model + "', " +
+                "'" + asset.serial_number + "', " +
+                "'" + asset.purchase_date + "', "+
+                "'" + asset.warranty_expiration + "', "+
+                "'" + asset.estimated_life + "', " +
+                "'" + asset.purchase_price + "', " +
+                "'" + asset.comments + "', " +
+                "'" + asset.item_count + "', " +
+                "CONVERT(DATE,'" + asset.created + "'), " +
+                "'" + asset.created_by + "', " +
+                "'" + asset.updated_by + "', " +
+                "CONVERT(DATE,'" + asset.last_updated + "'), " +
+                "'" + asset.photo_url + "', " +
+                "'" + asset.path + "', " +
+                "'" + asset.borrow + "',"+ 
+                "'false'" +")";
+        connectionDB.DataReader(query);
+        return Task.FromResult(asset);
+    }
     public static Asset MapRowToAsset<Asset>(SqlDataReader dr) where Asset : class, new()
     {
         Type type = typeof(Asset);
