@@ -1,11 +1,15 @@
 @page "/AssetFull"
 
 @inject Model.Asset asset
+@inject NavigationManager NavigationManager
 @using AssetManager.Model
 @using FastMember
 
 <div class=" main">
     <h1>Asset @asset.id</h1>
+
+    <button type="button" @onclick="() => editAsset()">Edit</button>
+    <button type="button" @onclick="() => deleteAsset()">Delete</button>
 
     <div class="container-fluid">
 
@@ -70,5 +74,16 @@
         fields.Add(new KeyValuePair<string, string>("borrow", "Borrowable"));
 
         asset = await AssetService.GetAssetById(asset.id);
+    }
+
+    void editAsset()
+    {
+        this.asset.id = asset.id;
+        NavigationManager.NavigateTo("/AssetEdit");
+    }
+
+    void deleteAsset()
+    {
+        
     }
 }
