@@ -62,9 +62,9 @@
                             </td>
                                    
                         }
-                        <td><button type="button" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-list"></span></button></td>
-                        <td><button type="button" @onclick="() => editAsset(dr.ItemArray[0])"><span class="oi oi-pencil"></span></button></td>
-                        <td><button type="button" @onclick="() => deleteAsset(dr.ItemArray[0])"><span class="oi oi-trash"></span></button></td>
+                        <td><button type="button" class="btn btn-outline-secondary" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-list"></span></button></td>
+                        <td><button type="button" class="btn btn-outline-primary" @onclick="() => editAsset(dr.ItemArray[0])"><span class="oi oi-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-outline-danger" @onclick="() => deleteAsset(dr.ItemArray[0])"><span class="oi oi-trash"></span></button></td>
                     </tr>
                 }
 
