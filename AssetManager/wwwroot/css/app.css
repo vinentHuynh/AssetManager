@@ -1,15 +1,65 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+:root {
+    /* light theme*/
+    --background: white;
+    --font-color: black;
+    --highlight: #f7f7f7; /* Very light gray (mostly white).*/
+    --highlight-2: #e2e3e5; /*Light grayish blue.*/
+    --link: #0366d6; /* #0366d6*/
+}
+
+
+/*added */
+.dark-mode {
+    --background: #2d2d2d; /*Very dark gray (mostly black)*/
+    --font-color: white;
+    --highlight: #393939; /*Very dark gray.*/
+    --highlight-2: #414648; /*#414648*/
+    --link: #3ca4ff; /*Light blue*/
+}
+
+
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+/*added*/
+.table {
+    color: var(--font-color);
+}
+
+div > a {
+    color: var(--font-color);
+}
+
+main {
+    background-color: var(--background);
+    color: var(--font-color);
+}
+/*--------*/
 
 h1:focus {
     outline: none;
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: var(--link);
+}
+
+.brightness {
+    background-color: black;
+    font-weight: bold;
+}
+
+.fontWeight {
+    font-weight: 300;
+}
+
+
+.alert-secondary { /*added*/
+    background-color: var(--highlight-2);
+    color: var(--font-color);
 }
 
 .btn-primary {

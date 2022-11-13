@@ -1,342 +1,74 @@
 @page "/AssetFull"
 
-
+@using AssetManager.Model
+@using FastMember
 
 <div class=" main">
-
+    <h1>Asset @asset.id</h1>
 
     <div class="container-fluid">
 
         <div class="row row-cols-1 row-cols-md-2 text-center g-4">
             
-            <div class="col">
-
-                <table class="table table-hover">
-                    <tr>
-                        <th class="table-primary">ID</th>
-                    </tr>
-                    <tr>
-                        <td>val</td>
-                    </tr>
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-hover">
-
-                    <tr>
-                        <th class="table-secondary">Name</th>
-                    </tr>
-
-                    <tr>
-                        <td>val</td>
-                        
-                    </tr>
-                    
-
-                </table>
-
-            </div> <div class="col table-striped ">
-
-                <table class="table table-hover">
-                    <tr>
-                        <th class="table-success">Description</th>
-                    </tr>
-                    <tr>
-                        <td>val</td>
-                    </tr>
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover">
-
-                    <tr>
-                        <th class="table-danger">Location_id</th>
-                    </tr>
-
-                    <tr>
-                        <td>val</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th class="table-dark">Status</th>
-                    </tr>
-                    <tr>
-                        <td>val</td>
-                    </tr>
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Type ID</th>
-                    </tr>
-
-                    <tr>
-                        <td>val</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div> <div class="col table-striped ">
-
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th class="table-dark">Manufacturer</th>
-                    </tr>
-                    <tr>
-                        <td>val</td>
-                    </tr>
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Model</th>
-                    </tr>
-
-                    <tr>
-                        <td>val</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            <div class="col table-striped ">
-
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th class="table-dark">Serial Number</th>
-                    </tr>
-                    <tr>
-                        <td>val</td>
-                    </tr>
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Putchase date</th>
-                    </tr>
-
-                    <tr>
-                        <td>val</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div> <div class="col table-striped ">
-
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th class="table-dark">Warranty Expiration</th>
-                    </tr>
-                    <tr>
-                        <td>val</td>
-                    </tr>
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Estimated Life</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Purchase Price</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Comments</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Item Count</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Created</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Created By</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Updated</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Last Updated</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Last Updated</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-            <div class="col">
-
-                <table class="table table-bordered table-hover"s>
-
-                    <tr>
-                        <th class="table-dark">Photo URl</th>
-                    </tr>
-
-                    <tr>
-                        <td>val20</td>
-                        
-                    </tr>
-
-                </table>
-
-            </div>
-          
+            @for (int i = 0; i < fields.Count; i++)
+            {
+                string fieldName = fields[i].Key;
+
+                <div class="col">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="table-dark">@fields[i].Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@accessor[asset, fieldName]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            }
 
         </div>
+
     </div>
 
 </div>
+
+@code {
+    Asset asset;
+    List<KeyValuePair<string, string>> fields = new List<KeyValuePair<string, string>>();
+    static Type type = typeof(Asset);
+    TypeAccessor accessor = TypeAccessor.Create(type);
+
+    protected override async Task OnInitializedAsync()
+    {
+        fields.Add(new KeyValuePair<string, string>("id", "ID"));
+        fields.Add(new KeyValuePair<string, string>("name", "Name"));
+        fields.Add(new KeyValuePair<string, string>("description", "Description"));
+        fields.Add(new KeyValuePair<string, string>("location_id", "Location"));
+        fields.Add(new KeyValuePair<string, string>("status_id", "Status"));
+        fields.Add(new KeyValuePair<string, string>("type_id", "Type"));
+        fields.Add(new KeyValuePair<string, string>("manufacturer", "Manufacturer"));
+        fields.Add(new KeyValuePair<string, string>("model", "Model"));
+        fields.Add(new KeyValuePair<string, string>("serial_number", "Serial Number"));
+        fields.Add(new KeyValuePair<string, string>("purchase_date", "Purchase Date"));
+        fields.Add(new KeyValuePair<string, string>("warranty_expiration", "Warranty Expiration"));
+        fields.Add(new KeyValuePair<string, string>("estimated_life", "Estimated Life"));
+        fields.Add(new KeyValuePair<string, string>("purchase_price", "Purchase Price"));
+        fields.Add(new KeyValuePair<string, string>("comments", "Comments"));
+        fields.Add(new KeyValuePair<string, string>("item_count", "Item Count"));
+        fields.Add(new KeyValuePair<string, string>("created", "Created"));
+        fields.Add(new KeyValuePair<string, string>("created_by", "Created By"));
+        fields.Add(new KeyValuePair<string, string>("updated_by", "Updated By"));
+        fields.Add(new KeyValuePair<string, string>("last_updated", "Last Updated"));
+        fields.Add(new KeyValuePair<string, string>("photo_url", "Photo URL"));
+        fields.Add(new KeyValuePair<string, string>("path", "Path"));
+        fields.Add(new KeyValuePair<string, string>("borrow", "Borrowable"));
+
+        asset = await AssetService.GetAssetById(1);
+    }
+}

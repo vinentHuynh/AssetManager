@@ -1,34 +1,35 @@
 ﻿@page "/Admin"
 @attribute [Authorize]
 
-<div class="body">
+<div class="main text-black">
+    
+    <div class="main-content">
 
-    <div class="main">
 
-        <div class="container">
 
-            <div class="menu">
+        <div class="menu">
 
-                <div class="menu-content">
+            <div class="menu-content text-center">
 
-                    <div class="view-asset"><p class="item"><NavLink href="#" class="nav-link">View Asset</NavLink></p></div>
-                    <div class="maintenance"><p class="item"><NavLink href="#" class="nav-link">Maintenance</NavLink></p></div>
-                    <div class="request"><p class="item"><NavLink href="#" class="nav-link" >Request</NavLink></p></div>
-                    <div class="system"><p class="item"><NavLink href="#" class="nav-link">System</NavLink></p></div>
-                    <div class="user"><p class="item"><NavLink href="/user" class="nav-link">User</NavLink></p></div>
-                    <div class="help"><p class="item"><NavLink href="#" class="nav-link">Help</NavLink></p></div>
-                    <div class="settings"><p class="item"><NavLink href="#" class="nav-link">Settings</NavLink></p></div>
-                    <div class="exit"><p class="item"><NavLink href="#" class="nav-link">Exit</NavLink></p></div>
 
-                </div>
-
+                <div class="view-asset"><a href="/admin/asset" class="item">View Asset</a></div>
+                <div class="maintenance"><a href="/admin/maintenance" class="item">Maintenance</a></div>
+                <div class="request"><a href="/admin/request" class="item">Request</a></div>
+                <div class="system"><a href="/admin/system" class="item">System</a></div>
+                <div class="user"><a href="/admin/user" class="item">Users</a></div>
+                <div class="help"><a href="/admin/help" class="item">Help</a></div>
+                <div class="settings"><a href="/admin/settings" class="item">Settings</a></div>
+                <div class="exit"><a href="/Logout">Logout</a></div>
             </div>
-
+            
         </div>
+
+
     </div>
 
 </div>
 
+
 @code {
-  
+
 }

@@ -1,6 +1,159 @@
-@*
-    To Do:
-     - create dark mode button
-     - create range input for text size
-     - create a 
+@page "/Admin/Settings"
+@using AssetManager.Model
+@using System.Collections.Generic;
+@inject IJSRuntime JsRuntime
+
+
+@*ToDO: 
+    - create dark mode 
+    - create text size 
+    - create brightness
+    - create text weight
+    - create reset button
+    - 
 *@
+
+<div class="main mt-2 ">
+    <div class="main-content ">
+
+        <form class="mb-3">
+          
+
+            <div class="mb-3">
+                <label class="form-label">Text size</label>
+                <select @onchange="ChangeTextSize" class="form-select" >
+
+                    @foreach(var item in textSizes){
+                        <option selected="@isSelectedText(item)" value="@item">@item</option>
+                    }
+                </select>
+               
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Font Weight</label>
+                <input type="range" class="form-range" min="300" max="1000" step="100" @onchange="ChangeFontWeight" />
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Brightness</label>
+                <input type="range" class="form-range" min="0" max="100" step="1" @oninput="ChangeBrightness"/>
+
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Text Style</label>
+                <select @onchange="ChangeTextStyle" class="form-select">
+
+                    @foreach (var item in textStyles)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+
+            </div>
+
+
+            <button class="btn btn-primary" @onclick="ResetSetting">Reset</button>
+        </form>
+
+       
+     
+
+
+    </div>
+
+ 
+
+</div>
+
+
+@code {
+
+   
+    @*--------------------------------------- TEXT SIZE ------------------------------------*@
+
+    private List<string> textSizes = new List<string> {"default", "fs-1", "fs-2", "fs-3", "fs-4", "fs-5", "fs-6" };
+
+    @*
+    private string selectedTextSize = "fs-4";
+  
+
+    private string selection (string select)
+    {
+        return select;
+    }
+
+    
+    public void getTextSize(ChangeEventArgs e){
+        Model.Setting.TextSize = e.Value.ToString();
+
+    }
+
+
+    private void  GetTextSize(ChangeEventArgs e){
+        selectedTextSize = e.Value.ToString();
+        Setting.TextSize = e.Value.ToString();
+
+    }
+
+    */
+
+   @*
+    private bool IsSelectedT (string textS){
+
+        foreach (var item in textSizes){
+            if (item == textS) {
+                return true;
+            }
+        }
+        return false;
+    }
+    *@
+
+    private string get_TextSize { get; set; }
+
+
+    protected override async Task OnInitializedAsync(){
+        var fromLocalStorage = await JsRuntime.InvokeAsync<string>("readLocalStorage", "textSize"); 
+
+        if (!string.IsNullOrEmpty(fromLocalStorage)) {
+            get_TextSize = fromLocalStorage;
+
+        }
+    }
+    private bool isSelectedText (string text){
+        return text == get_TextSize;
+    }
+
+    private async Task ChangeTextSize (ChangeEventArgs e){
+        await JsRuntime.InvokeVoidAsync("textSize", e.Value.ToString());
+    }
+    /*-------------------------------------------------------------------------*/
+
+    // reset button 
+    private async Task ResetSetting(){
+        await JsRuntime.InvokeVoidAsync("resetSetting");
+    }
+
+
+    // Brightness
+    private async Task ChangeBrightness(ChangeEventArgs e){
+        await JsRuntime.InvokeVoidAsync("readBrightness", e.Value);
+    }
+
+
+    // Text font weight
+    private async Task ChangeFontWeight(ChangeEventArgs e){
+        await JsRuntime.InvokeVoidAsync("readFontWeight", e.Value);
+    }
+
+    // font family
+     private List<string> textStyles = new List<string> { "default","Arial ,sans-serif", "Verdana ,sans-serif", "Tahoma ,sans-serif", "Trebuchet MS ,sans-serif", "Times New Roman ,serif", "Georgia ,serif", "Garamond serif", " Courier New monospace", " Brush Script MT cursive" };
+
+    private async Task ChangeTextStyle(ChangeEventArgs e) {
+        await JsRuntime.InvokeVoidAsync("readTextStyle", e.Value);
+    }
+}
+
+

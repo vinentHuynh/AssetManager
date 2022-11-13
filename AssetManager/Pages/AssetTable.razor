@@ -1,10 +1,14 @@
 @page "/Asset"
+@page "/Admin/Asset"
+@inject IJSRuntime JsRuntime
 @attribute [Authorize]
 @using Microsoft.Data.SqlClient
 @using System.Data
 
-<h1 class="text-center">Asset</h1>
 
+<div class="main">
+<h1 class="text-center">Asset</h1>
+</div>
 @*To Do:
     - create a table
     - create a caption
@@ -16,9 +20,9 @@
 
 
 
-<div class="container-sm table-responsive" style="margin= 0">
+<div class="container-sm table-responsive">
 
-    <div class=" table-responsive ">
+    <div class="table-responsive ">
         <table class="table table-hover table-bordered ">
 
             <thead class="table-dark">
@@ -73,5 +77,9 @@
         connection.OpenConnection();
         dt = connection.ShowDataInGridView("select * from dbo.asset").Tables[0];
 
+
     }
+    
+
+
 }
