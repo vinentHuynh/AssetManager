@@ -18,12 +18,13 @@ namespace AssetManager.Classes
             try
             {
                 var userInfo = await SecureStorage.GetAsync("accounttoken");
-                if(userInfo != null)
+                if (userInfo != null)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, "testuser") };
+                    var claims = new[] { new Claim(ClaimTypes.Name, "AdminUser") };
                     identity = new ClaimsIdentity(claims, "Server Authentication");
                     return new AuthenticationState(new ClaimsPrincipal(identity));
                 }
+                
             }
             catch (Exception e)
             {

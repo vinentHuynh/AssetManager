@@ -6,7 +6,7 @@
 
 @*
 TO-DO
-    -format and logo
+    -validation message
 *@
 
 <div class="main d-flex align-items-center " style="height: 100vh;">
@@ -23,7 +23,7 @@ TO-DO
  
                 <div class="form-group">
                    <label>Username</label>
-                   <InputText id="email" @bind-Value="userModel.Name" class="form-control" />
+                   <InputText id="email" @bind-Value="userModel.Username" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Password</label>
@@ -48,19 +48,34 @@ TO-DO
 
 
         await AuthStateProvider.Login(token);
-        NavigationManager.NavigateTo("/Admin");
-        Connect();
+        if (userModel.Username == "admin@gmail.com")
+            NavigationManager.NavigateTo("/Admin");
+        else
+            NavigationManager.NavigateTo("/Asset");
     }
+
+   /* public bool isAdmin(){
+        int role = 1;
+        string query = "SELECT role FROM dbo.[user] WHERE email='" + userModel.Username + "'";
+        ConnectionDB connection = new ConnectionDB();
+        connection.OpenConnection();
+        Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
+        dr.Read();
+        for(int i = 0; i < dr.FieldCount; i++)
+            role = dr.GetInt32(i);
+        
+        if (role == 0)
+            return true;
+        else
+            return false;
+    }
+    */
 
     public async void logout(){
         await AuthStateProvider.Logout();
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/login");
     }
     
-    private void Connect()
-        {
-            ConnectionDB connectionDB = new ConnectionDB();
-            connectionDB.OpenConnection();
-        }
+   
 }
 
