@@ -1,11 +1,16 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="">AssetManager</a>
-		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+﻿
+<div class="top-row ps-3 navbar navbar-dark " style="height: 5em;">
+	<div class="container-fluid" style="height: 100%; display: flex; align-items: center; ">
+        <div style="margin: 0; display: flex; align-items: center; " >
+            <a href="" > <img src="/imgs/sam_head.svg" alt="sam" style="height: 4em; cursor: pointer;" /> </a>
+            <a class="navbar-brand" href="">Asset Manager</a>
+        </div>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 	</div>
 </div>
+
 
 <div class="@NavMenuCssClass " @onclick="ToggleNavMenu">
     <nav class="flex-column" >
@@ -24,10 +29,11 @@
                     </NavLink>
                 </div>
             </NotAuthorized>
-			<Authorized>       
-                
+			<Authorized>
+
+
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="">
+                    <NavLink class="nav-link" href="/admin">
                         <span class="oi oi-home" aria-hidden="true"></span> Home
                     </NavLink>
                 </div>
@@ -53,6 +59,23 @@
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="borrow_history">
                         <span class="oi oi-list-rich" aria-hidden="true"></span>Borrow history
+                    </NavLink>
+                </div>
+                      <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="settings">
+                        <span class="oi oi-cog" aria-hidden="true"></span>Settings
+                    </NavLink>
+                </div>
+
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="https://docs.microsoft.com/aspnet/" target="_blank">
+                        <span class="oi oi-ellipses" aria-hidden="true"></span>About
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="logout">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span>Logout
                     </NavLink>
                 </div>
 			</Authorized>

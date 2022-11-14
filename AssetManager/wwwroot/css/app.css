@@ -33,6 +33,10 @@ html, body {
     color: var(--font-color);
 }
 
+table th {
+    background: ##818589;
+}
+
 div > a {
     color: var(--font-color);
 }

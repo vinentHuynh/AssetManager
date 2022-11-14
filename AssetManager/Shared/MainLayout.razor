@@ -8,22 +8,6 @@
 	</div>
 
 	<main>
-		<div class="top-row px-4">
-
-			Theme 
-			<select @onchange="ChangingTheme" class="ml-3">
-				@foreach (var theme in themes)
-				{
-					<option selected="@isSelectedTheme(theme)" value="@theme">@theme</option>
-				}
-			</select>
-			<a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-			<AuthorizeView>
-				<Authorized>
-					<a href="/Logout" style="color: black;"tyle>Logout</a>
-				</Authorized>
-			</AuthorizeView>
-		</div>
 		
 
 		<article class="content px-4">
