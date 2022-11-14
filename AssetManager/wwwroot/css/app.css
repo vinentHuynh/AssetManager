@@ -81,7 +81,24 @@ a, .btn-link {
 .btn-primary {
     color: #fff;
     background-color: #003366;
-    border-color: #002447;
+    border-color: #003366;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #05213D;
+    border-color: #05213D;
+}
+
+.btn-outline-primary {
+    color: #003366;
+    border-color: #003366;
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #003366;
+    border-color: #003366;
 }
 
 .content {

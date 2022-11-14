@@ -5,8 +5,9 @@
 @attribute [Authorize]
 @using Microsoft.Data.SqlClient
 @using System.Data
+@using AssetManager.Model
 @inject NavigationManager NavigationManager
-@inject Model.Asset Asset
+@inject Model.Asset asset
 
 <div class="main container-sm">
    <h1 class="text-center"> Assets</h1>
@@ -41,15 +42,14 @@
             <thead>
 
                 <tr>
-                    @for (int i =0; i < dt.Columns.Count;i++)
-                    {
-                        <th> @dt.Columns[i].ColumnName</th> 
-                        
-                    }
-                   
-                    <th>details</th>
-                    <th>edit</th>
-                    <th>delete</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
 
             </thead>
@@ -69,7 +69,7 @@
                         }
                         <td><button type="button" class="btn btn-outline-secondary" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-list"></span></button></td>
                         <td><button type="button" class="btn btn-outline-primary" @onclick="() => editAsset(dr.ItemArray[0])"><span class="oi oi-pencil"></span></button></td>
-                        <td><button type="button" class="btn btn-outline-danger" @onclick="() => deleteAsset(dr.ItemArray[0])"><span class="oi oi-trash"></span></button></td>
+                        <td><button type="button" class="btn btn-outline-danger" @onclick="() => deleteModalShow(dr.ItemArray[0], dr.ItemArray[1])"><span class="oi oi-trash"></span></button></td>
                     </tr>
                 }
 
@@ -79,18 +79,47 @@
         </table>
         
     </div>
-
+    
 </div>
 
+@if (showDelete)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@deleteModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
 
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Delete</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@deleteModalCancel"><span class="oi oi-x"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete the following asset?</p>
+                    <p>@asset.id - @asset.name</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" @onclick=@deleteModalOk>Delete</button>
+                    <button type="button" class="btn" @onclick="@deleteModalCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
 
 
 
 @code {
+    bool showDelete = false;
+
     private ConnectionDB connection = new ConnectionDB();
     DataTable dt = new DataTable();
     string search = "";
-    string query = "select id,name,description,manufacturer,model from dbo.asset";
+    string query = "select id,name,description,manufacturer,model from dbo.asset where deleted = 0";
     protected override void OnInitialized()
     {
         connection.OpenConnection();
@@ -99,18 +128,32 @@
 
     }
 
-    void fullAsset(object id){
-        this.Asset.id = Int32.Parse(id.ToString());
+    void fullAsset(object id)
+    {
+        this.asset.id = Int32.Parse(id.ToString());
         NavigationManager.NavigateTo("/AssetFull");
     }
 
-    void editAsset(object id){
-        this.Asset.id = Int32.Parse(id.ToString());
+    void editAsset(object id)
+    {
+        this.asset.id = Int32.Parse(id.ToString());
         NavigationManager.NavigateTo("/AssetEdit");
     }
 
-    void deleteAsset(object id){
-        this.Asset.id = Int32.Parse(id.ToString());
+    void deleteModalShow(object id, object name)
+    {
+        this.asset.id = Int32.Parse(id.ToString());
+        this.asset.name = name.ToString();
+        showDelete = true;
+    }
+
+    void deleteModalCancel() => showDelete = false;
+
+    void deleteModalOk()
+    {
+        AssetService.DeleteAsset(this.asset);
+        showDelete = false;
+        NavigationManager.NavigateTo("/Admin/Asset", forceLoad: true);
     }
     void addAsset()
     {

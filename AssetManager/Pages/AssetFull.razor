@@ -16,7 +16,7 @@
         </div>
         <div  class="table-actions-2">
             <button type="button" class="btn btn-primary" @onclick="() => editAsset()">Edit</button>
-            <button type="button" class="btn btn-outline-danger" @onclick="() => deleteAsset()">Delete</button>
+            <button type="button" class="btn btn-danger" @onclick="() => deleteModalShow()">Delete</button>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
 
                 <div class="col">
 
-                    <table class="table table-hover">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>@fields[i].Value</th>
@@ -52,10 +52,40 @@
 
 </div>
 
+@if (showDelete)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@deleteModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Delete</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@deleteModalCancel"><span class="oi oi-x"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete the following asset?</p>
+                    <p>@asset.id - @asset.name</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" @onclick=@deleteModalOk>Delete</button>
+                    <button type="button" class="btn" @onclick="@deleteModalCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
 @code {
     List<KeyValuePair<string, string>> fields = new List<KeyValuePair<string, string>>();
     static Type type = typeof(Asset);
     TypeAccessor accessor = TypeAccessor.Create(type);
+    bool showDelete = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -91,8 +121,14 @@
         NavigationManager.NavigateTo("/AssetEdit");
     }
 
-    void deleteAsset()
+    void deleteModalShow() => showDelete = true;
+
+    void deleteModalCancel() => showDelete = false;
+
+    void deleteModalOk()
     {
-        
+        AssetService.DeleteAsset(this.asset);
+        showDelete = false;
+        NavigationManager.NavigateTo("/Admin/Asset");
     }
 }

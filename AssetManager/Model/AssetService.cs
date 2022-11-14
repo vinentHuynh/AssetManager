@@ -1,7 +1,5 @@
 ﻿using FastMember;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Xml;
 
 namespace AssetManager.Model;
 
@@ -90,6 +88,17 @@ public class AssetService
         connectionDB.DataReader(query);
         return Task.FromResult(asset);
     }
+    public static Task<Asset> DeleteAsset(Asset asset)
+    {
+        ConnectionDB connectionDB = new ConnectionDB();
+        connectionDB.OpenConnection();
+
+        string query = "UPDATE asset SET deleted = 1 WHERE id = " + asset.id;
+        connectionDB.DataReader(query);
+
+        return Task.FromResult(asset);
+    }
+
     public static Asset MapRowToAsset<Asset>(SqlDataReader dr) where Asset : class, new()
     {
         Type type = typeof(Asset);
