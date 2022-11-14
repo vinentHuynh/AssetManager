@@ -6,9 +6,11 @@
 @using FastMember
 
 <div class=" main">
-    <h1>Asset @asset.id</h1>
+    <div class="assetNum mb-6">
+        <h1>Asset @asset.id</h1>
+    </div>
     
-    <div class="table-actions mb-6">
+    <div class="table-actions">
         <div class="table-actions-1">
             <a href="/asset" class="btn btn-primary" title="Go back to asset">Back</a>
         </div>
@@ -18,7 +20,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid table-container">
 
         <div class="row row-cols-1 row-cols-md-2 text-center g-4">
             
@@ -28,7 +30,7 @@
 
                 <div class="col">
 
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>@fields[i].Value</th>
@@ -36,7 +38,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="table-active">@accessor[asset, fieldName]</td>
+                                <td>@accessor[asset, fieldName]</td>
                             </tr>
                         </tbody>
                     </table>

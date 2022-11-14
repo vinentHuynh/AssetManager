@@ -20,10 +20,6 @@
 }
 
 
-.fontStyle {
-    
-}
-
 
 html, body {
     /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
@@ -31,12 +27,21 @@ html, body {
 /*added*/
 .table {
     color: var(--font-color);
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
 }
 
-table th {
-    background: ##818589;
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: white;
 }
 
+table > thead {
+    background-color: #818589;
+}
+
+
+
+table > td,
 div > a {
     color: var(--font-color);
 }
