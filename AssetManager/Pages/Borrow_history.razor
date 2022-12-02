@@ -1,57 +1,73 @@
 @page "/Borrow_history"
 @page "/Admin/Borrow_history"
+
 @attribute [Authorize]
-
-
+@using Microsoft.Data.SqlClient
+@using System.Data
+@inject NavigationManager NavigationManager
+@inject Model.Asset Asset
 @*
     To Do:
         - create a table
         - display id, user_id, asset_id, date_borrowed, date_returned
 *@
 
-<div class="main">
+<div class="container-sm table-responsive">
 
-    <div class="container">
 
-        <div class="table-responsive">
+    <div class="table-responsive ">
+        <table class="table table-hover table-bordered ">
 
-            <table class="table table-hover table-bordered">
+            <thead class="table-dark">
 
-                <thead class="table-dark">
+                <tr>
+                    @for (int i = 0; i < dt.Columns.Count; i++)
+                    {
+                        <th> @Char.ToUpper(dt.Columns[i].ColumnName[0])@dt.Columns[i].ColumnName.Substring(1) </th>
 
+                    }
+
+
+                </tr>
+
+            </thead>
+
+
+            <tbody class="table-group-divider">
+
+                @foreach (DataRow dr in dt.Rows)
+                {
                     <tr>
-                        <th>ID</th>
-                        <th>User ID</th>
-                        <th>Asset ID</th>
-                        <th>Date Borrowed</th>
-                        <th>Date Returned</th>
+                        @foreach (var item in dr.ItemArray)
+                        {
+                            <td>
+                                @item
+                            </td>
+
+                        }
+                        
                     </tr>
+                }
 
-                </thead>
+            </tbody>
 
-                <tbody>
-                    
-                    <tr>
-                        <td>1</td>
-                        <td>20</td>
-                        <td>288</td>
-                        <td>12/20/2022</td>
-                        <td>01/20/2023</td>
-                    </tr>  
-                    <tr>
-                        <td>1</td>
-                        <td>20</td>
-                        <td>288</td>
-                        <td>12/20/2022</td>
-                        <td>01/20/2023</td>
-                    </tr>
 
-                </tbody>
-
-            </table>
-
-        </div>
+        </table>
 
     </div>
 
 </div>
+
+@code{
+    private ConnectionDB connection = new ConnectionDB();
+                    DataTable dt = new DataTable();
+                    string search = "";
+                    string query = "select * from dbo.borrow_history";
+                    protected override void OnInitialized()
+                    {
+                        connection.OpenConnection();
+                        dt = connection.ShowDataInGridView(query).Tables[0];
+
+
+                    }
+}

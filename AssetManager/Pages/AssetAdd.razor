@@ -4,7 +4,7 @@
 @inject NavigationManager NavigationManager
 @using AssetManager.Model
 @using FastMember
-
+@inject IJSRuntime JsRuntime
 <div class=" main">
     <h1>Asset</h1>
 
@@ -39,7 +39,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="text" style="width:100%" @bind="newName" />
+                                <input  class="form-control" type="text" style="width:100%" @bind="newName" />
                             </td>
                         </tr>
                     </tbody>
@@ -124,7 +124,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="text" style="width:100%" @bind="newManufacturer" />
+                                <input placeholder="Optional" class="form-control" type="text" style="width:100%" @bind="newManufacturer" />
                             </td>
                         </tr>
                     </tbody>
@@ -141,7 +141,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="text" style="width:100%" @bind="newModel" />
+                                <input placeholder="Optional" class="form-control" type="text" style="width:100%" @bind="newModel" />
                             </td>
                         </tr>
                     </tbody>
@@ -158,7 +158,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="text" style="width:100%" @bind="newSerial" />
+                                <input placeholder="Optional" class="form-control" type="text" style="width:100%" @bind="newSerial" />
                             </td>
                         </tr>
                     </tbody>
@@ -175,7 +175,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="date" style="width:100%" @bind="newPurchaseDate" />
+                                <input placeholder="Optional" class="form-control" type="date" style="width:100%" @bind="newPurchaseDate" />
                             </td>
                         </tr>
                     </tbody>
@@ -192,7 +192,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="date" style="width:100%" @bind="newWarrantyExp" />
+                                <input placeholder="Optional" class="form-control" type="date" style="width:100%" @bind="newWarrantyExp" />
                             </td>
                         </tr>
                     </tbody>
@@ -209,7 +209,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newEstimatedLife" />
+                                <input placeholder="Optional" class="form-control" type="number" style="width:100%" @bind="newEstimatedLife" />
                             </td>
                         </tr>
                     </tbody>
@@ -226,7 +226,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" step="0.01" style="width:100%" @bind="newPurchasePrice" />
+                                <input placeholder="Optional" class="form-control" type="number" step="0.01" style="width:100%" @bind="newPurchasePrice" />
                             </td>
                         </tr>
                     </tbody>
@@ -243,7 +243,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="text" style="width:100%" @bind="newComments" />
+                                <input placeholder="Optional" class="form-control" type="text" style="width:100%" @bind="newComments" />
                             </td>
                         </tr>
                     </tbody>
@@ -260,7 +260,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newItemCount" />
+                                <input placeholder="Optional" class="form-control" type="number" style="width:100%" @bind="newItemCount" />
                             </td>
                         </tr>
                     </tbody>
@@ -294,7 +294,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newCreatedBy" />
+                                <input  class="form-control" type="number" style="width:100%" @bind="newCreatedBy" />
                             </td>
                         </tr>
                     </tbody>
@@ -311,7 +311,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newUpdatedBy" />
+                                <input  class="form-control" type="number" style="width:100%" @bind="newUpdatedBy" />
                             </td>
                         </tr>
                     </tbody>
@@ -345,7 +345,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="text" style="width:100%" @bind="newPhotoUrl" />
+                                <input placeholder="Optional" class="form-control" type="text" style="width:100%" @bind="newPhotoUrl" />
                             </td>
                         </tr>
                     </tbody>
@@ -362,7 +362,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="text" style="width:100%" @bind="newPath" />
+                                <input placeholder="Optional" class="form-control" type="text" style="width:100%" @bind="newPath" />
                             </td>
                         </tr>
                     </tbody>
@@ -379,7 +379,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input type="checkbox" style="width:100%" checked="@accessor[asset, "borrow"]" @bind-value="newBorrow" />
+                                <input placeholder="Optional"type="checkbox" style="width:100%" checked="@accessor[asset, "borrow"]" @bind-value="newBorrow" />
                             </td>
                         </tr>
                     </tbody>
@@ -395,8 +395,32 @@
 
 </div>
 
+@if (showError)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" >
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body ">
+              
+                    <p class="text-black">@output</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" @onclick=@errorModalOk>Okay</button>                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
 
 @code {
+    bool showError = false;
+
+    string output = "The following fields are missing: ";
     static Type type = typeof(Asset);
     TypeAccessor accessor = TypeAccessor.Create(type);
     Asset asset = new Asset();
@@ -410,7 +434,7 @@
     private string newSerial;
     private DateTime? newPurchaseDate;
     private DateTime? newWarrantyExp;
-    private string newEstimatedLife;
+    private string? newEstimatedLife;
     private string newPurchasePrice;
     private string newComments;
     private string newItemCount;
@@ -427,10 +451,61 @@
         connectionDB.OpenConnection();
         asset.id = (int)connectionDB.ShowDataInGridView(query).Tables[0].Rows[0].ItemArray[0]+1;
         connectionDB.CloseConnection();
-    }
 
+    }
+    void errorModalOk()
+    {
+        showError = false;
+        output = "The following fields are missing: ";
+    }
+    async Task<bool> validity()
+    {
+        List<string> errorList = new List<string>();
+        if (newName == null)
+        {
+            errorList.Add("name");
+        }
+        if ( newDesc == null)
+        {
+            errorList.Add("description");
+        }
+        if (newLoc == null)
+        {
+            errorList.Add("location");
+        }
+        if ( newStatus == null)
+        {
+            errorList.Add("status");
+        }
+        if ( newType == null)
+        {
+            errorList.Add("type");
+        }
+        if ( newCreatedBy == null)
+        {
+            errorList.Add("Created By");
+        }
+        if ( newUpdatedBy == null)
+        {
+            errorList.Add("Updated By");
+        }
+
+        if (errorList.Count == 0)
+            return false;
+
+        foreach(string s in errorList)
+        {
+            output += s + ", ";
+        }
+        output = output.Substring(0,output.Length - 2);
+        showError = true;
+        
+        return true;
+    }
     async void assetAdd()
     {
+        if (await validity())
+            return;
         asset.name = newName;
         asset.description = newDesc;
         asset.location_id = Int32.Parse(newLoc);
@@ -441,19 +516,20 @@
         asset.serial_number = newSerial;
         asset.purchase_date = newPurchaseDate;
         asset.warranty_expiration = newWarrantyExp;
-        asset.estimated_life = Int32.Parse(newEstimatedLife);
+        asset.estimated_life = newEstimatedLife == null? null: Int32.Parse(newEstimatedLife);
         asset.purchase_price = Convert.ToDouble(newPurchasePrice);
         asset.comments = newComments;
-        asset.item_count = Int32.Parse(newItemCount);
-        asset.created_by = Int32.Parse(newCreatedBy);
-        asset.updated_by = Int32.Parse(newUpdatedBy);
+        asset.item_count = newItemCount == null ? null : Int32.Parse(newItemCount);
+        asset.created_by = newCreatedBy == null ? null : Int32.Parse(newCreatedBy);
+        asset.updated_by = newUpdatedBy == null ? null : Int32.Parse(newUpdatedBy);
         asset.created = DateTime.Now;
         asset.last_updated = DateTime.Now;
         asset.photo_url = newPhotoUrl;
         asset.path = newPath;
         asset.borrow = newBorrow;
-
-        AssetService.AddAsset(asset);
+        
+        await AssetService.AddAsset(asset);
+          
 
         NavigationManager.NavigateTo("/Admin/Asset");
     }
