@@ -14,7 +14,7 @@ public class Asset
     public DateTime? purchase_date { get; set; }
     public DateTime? warranty_expiration { get; set; }
     public int? estimated_life { get; set; }
-    public double purchase_price { get; set; }
+    public double? purchase_price { get; set; }
     public string comments { get; set; }
     public int? item_count { get ; set; }
     public DateTime created { get; set; }
@@ -23,5 +23,5 @@ public class Asset
     public DateTime last_updated { get; set; }
     public string photo_url { get; set; }
     public string path { get; set; }
-    public bool borrow { get; set; }
+    public bool? borrow { get; set; }
 }
