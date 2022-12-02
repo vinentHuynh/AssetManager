@@ -73,7 +73,12 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newLoc" />
+                                <select class="form-control" style="width:100%" @bind="newLocId">
+                                    @foreach (var loc in locList)
+                                    {
+                                        <option value="@loc.id">@loc.value</option>
+                                    }
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -90,7 +95,12 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newStatus" />
+                                <select class="form-control" style="width:100%" @bind="newStatusId">
+                                    @foreach (var status in statusList)
+                                    {
+                                        <option value="@status.id">@status.value</option>
+                                    }
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -107,7 +117,12 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newType" />
+                                <select class="form-control" style="width:100%" @bind="newTypeId">
+                                    @foreach (var type in typeList)
+                                    {
+                                        <option value="@type.id">@type.value</option>
+                                    }
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -294,7 +309,12 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newCreatedBy" />
+                                <select class="form-control" style="width:100%" @bind="newCreatedBy">
+                                    @foreach (var user in userList)
+                                    {
+                                        <option value="@user.id">@user.id - @user.first_name @user.last_name</option>
+                                    }
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -311,7 +331,12 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input class="form-control" type="number" style="width:100%" @bind="newUpdatedBy" />
+                                <select class="form-control" style="width:100%" @bind="newUpdatedBy">
+                                    @foreach (var user in userList)
+                                    {
+                                        <option value="@user.id">@user.id - @user.first_name @user.last_name</option>
+                                    }
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -400,11 +425,16 @@
     static Type type = typeof(Asset);
     TypeAccessor accessor = TypeAccessor.Create(type);
 
+    private List<Location> locList;
+    private List<Status> statusList;
+    private List<AssetType> typeList;
+    private List<UserPartial> userList;
+
     private string newName;
     private string newDesc;
-    private int newLoc;
-    private int newStatus;
-    private int newType;
+    private int newLocId;
+    private int newStatusId;
+    private int newTypeId;
     private string newManufacturer;
     private string newModel;
     private string newSerial;
@@ -422,13 +452,18 @@
 
     protected override async Task OnInitializedAsync()
     {
+        locList = LocationService.GetAllLocations();
+        statusList = StatusService.GetAllStatuses();
+        typeList = AssetTypeService.GetAllTypes();
+        userList = UserPartialService.GetAllUsers();
+
         asset = await AssetService.GetAssetById(asset.id);
 
         newName = accessor[asset, "name"].ToString();
         newDesc = accessor[asset, "description"].ToString();
-        newLoc = Int32.Parse(accessor[asset, "location_id"].ToString());
-        newStatus = Int32.Parse(accessor[asset, "status_id"].ToString());
-        newType = Int32.Parse(accessor[asset, "type_id"].ToString());
+        newLocId = Int32.Parse(accessor[asset, "location_id"].ToString());
+        newStatusId = Int32.Parse(accessor[asset, "status_id"].ToString());
+        newTypeId = Int32.Parse(accessor[asset, "type_id"].ToString());
         newManufacturer = accessor[asset, "manufacturer"].ToString();
         newModel = accessor[asset, "model"].ToString();
         newSerial = accessor[asset, "serial_number"].ToString();
@@ -448,9 +483,9 @@
     {
         asset.name = newName;
         asset.description = newDesc;
-        asset.location_id = newLoc;
-        asset.status_id = newStatus;
-        asset.type_id = newType;
+        asset.location_id = newLocId;
+        asset.status_id = newStatusId;
+        asset.type_id = newTypeId;
         asset.manufacturer = newManufacturer;
         asset.model = newModel;
         asset.serial_number = newSerial;

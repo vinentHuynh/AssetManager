@@ -61,30 +61,33 @@ public class AssetService
         ConnectionDB connectionDB = new ConnectionDB();
         connectionDB.OpenConnection();
 
+        string purchaseDate = asset.purchase_date != null ? ("CAST('" + asset.purchase_date + "' AS DATETIME), ") : "NULL, ";
+        string warrantyExp = asset.warranty_expiration != null ? ("CAST('" + asset.warranty_expiration + "' AS DATETIME), ") : "NULL, ";
+
         string query = "INSERT INTO asset VALUES(" +
-                
-                "'" + asset.name + "', " +
-                "'" + asset.description + "', " +
-                asset.location_id + ", " +
-                asset.status_id + ", " +
-                asset.type_id + ", " +
-                "'" + asset.manufacturer + "', " +
-                "'" + asset.model + "', " +
-                "'" + asset.serial_number + "', " +
-                "'" + asset.purchase_date + "', "+
-                "'" + asset.warranty_expiration + "', "+
-                "'" + asset.estimated_life + "', " +
-                "'" + asset.purchase_price + "', " +
-                "'" + asset.comments + "', " +
-                "'" + asset.item_count + "', " +
-                "CONVERT(DATE,'" + asset.created + "'), " +
-                "'" + asset.created_by + "', " +
-                "'" + asset.updated_by + "', " +
-                "CONVERT(DATE,'" + asset.last_updated + "'), " +
-                "'" + asset.photo_url + "', " +
-                "'" + asset.path + "', " +
-                "'" + asset.borrow + "',"+ 
-                "'false'" +")";
+            "'" + asset.name + "', " +
+            "'" + asset.description + "', " +
+            asset.location_id + ", " +
+            asset.status_id + ", " +
+            asset.type_id + ", " +
+            "'" + asset.manufacturer + "', " +
+            "'" + asset.model + "', " +
+            "'" + asset.serial_number + "', " +
+            purchaseDate +
+            warrantyExp +
+            "'" + asset.estimated_life + "', " +
+            "'" + asset.purchase_price + "', " +
+            "'" + asset.comments + "', " +
+            "'" + asset.item_count + "', " +
+            "CAST('" + asset.created + "' AS DATETIME), " +
+            "'" + asset.created_by + "', " +
+            "'" + asset.updated_by + "', " +
+            "CAST('" + asset.last_updated + "' AS DATETIME), " +
+            "'" + asset.photo_url + "', " +
+            "'" + asset.path + "', " +
+            "'" + asset.borrow + "', "+ 
+            "'false'" +
+        ")";
         connectionDB.DataReader(query);
         return Task.FromResult(asset);
     }
