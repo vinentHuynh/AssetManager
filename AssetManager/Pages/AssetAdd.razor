@@ -505,15 +505,15 @@
         {
             errorList.Add("description");
         }
-        if (newLoc == null)
+        if (newLocId == null)
         {
             errorList.Add("location");
         }
-        if ( newStatus == null)
+        if ( newStatusId == null)
         {
             errorList.Add("status");
         }
-        if ( newType == null)
+        if ( newTypeId == null)
         {
             errorList.Add("type");
         }
@@ -556,8 +556,8 @@
         asset.purchase_price = newPurchasePrice != null ? Convert.ToDouble(newPurchasePrice) : null;
         asset.comments = newComments;
         asset.item_count = newItemCount == null ? null : Int32.Parse(newItemCount);
-        asset.created_by = newCreatedBy == null ? null : Int32.Parse(newCreatedBy);
-        asset.updated_by = newUpdatedBy == null ? null : Int32.Parse(newUpdatedBy);
+        asset.created_by = newCreatedBy == null ? null : newCreatedBy;
+        asset.updated_by = newUpdatedBy == null ? null : newUpdatedBy;
         asset.created = DateTime.Now;
         asset.last_updated = DateTime.Now;
         asset.photo_url = newPhotoUrl;
