@@ -4,13 +4,9 @@
 @attribute [Authorize]
 @using Microsoft.Data.SqlClient
 @using System.Data
+@using AssetManager.Model
 @inject NavigationManager NavigationManager
 @inject Model.Asset Asset
-@*
-    To Do:
-        - create a table
-        - display id, user_id, asset_id, date_borrowed, date_returned
-*@
 
 <div class="container-sm table-responsive">
 
@@ -18,18 +14,18 @@
     <div class="table-responsive ">
         <table class="table table-hover table-bordered ">
 
-            <thead class="table-dark">
-
+            <thead class="">
                 <tr>
-                    @for (int i = 0; i < dt.Columns.Count; i++)
-                    {
-                        <th> @Char.ToUpper(dt.Columns[i].ColumnName[0])@dt.Columns[i].ColumnName.Substring(1) </th>
-
-                    }
-
-
+                    <th>ID</th>
+                    <th>Borrower</th>
+                    <th>Asset</th>
+                    <th>Date Requested</th>
+                    <th>Date Borrowed</th>
+                    <th>Date Returned</th>
+                    <th>Comments</th>
+                    <th>Approve</th>
+                    <th>Return</th>
                 </tr>
-
             </thead>
 
 
@@ -37,15 +33,23 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
+                    @if (dr.ItemArray[4].ToString() == "")
+                    {
+                        isDisabledApprove = false;
+                    }
+                    else if (dr.ItemArray[5].ToString() == "")
+                    {
+                        isDisabledReturn = false;
+                    }
                     <tr>
                         @foreach (var item in dr.ItemArray)
                         {
                             <td>
                                 @item
                             </td>
-
                         }
-                        
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-primary" @onclick="() => approveModalShow(dr.ItemArray[0], dr.ItemArray[1], dr.ItemArray[2])" disabled="@isDisabledApprove"><span class="oi oi-check"></span></button></td>
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-warning" @onclick="() => returnModalShow(dr.ItemArray[0], dr.ItemArray[1], dr.ItemArray[2])" disabled="@isDisabledReturn"><span class="oi oi-account-login"></span></button></td>
                     </tr>
                 }
 
@@ -58,16 +62,143 @@
 
 </div>
 
+@if (showApprove)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@approveModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Approval of Borrow Request</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@approveModalCancel"><span class="oi oi-x"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to approve the following borrow request?</p>
+                    <p>Borrow Request: @idApprove</p>
+                    <p>Borrower: @userApprove</p>
+                    <p>Asset: @assetIdApproveFull</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick=@approveModalOk>Approve</button>
+                    <button type="button" class="btn" @onclick="@approveModalCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (showReturn)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@returnModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Return of Borrowed Asset</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@returnModalCancel"><span class="oi oi-x"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to return the following asset?</p>
+                    <p>Borrow Request: @idReturn</p>
+                    <p>Borrower: @userReturn</p>
+                    <p>Asset: @assetIdReturnFull</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick=@returnModalOk>Return</button>
+                    <button type="button" class="btn" @onclick="@returnModalCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
 @code{
+    bool isDisabledApprove = true;
+    bool isDisabledReturn = true;
+    bool showApprove = false;
+    bool showReturn = false;
+    int idApprove;
+    string userApprove;
+    string assetIdApproveFull;
+    int assetIdApprove;
+    int idReturn;
+    string userReturn;
+    string assetIdReturnFull;
+    int assetIdReturn;
+
     private ConnectionDB connection = new ConnectionDB();
-                    DataTable dt = new DataTable();
-                    string search = "";
-                    string query = "select * from dbo.borrow_history";
-                    protected override void OnInitialized()
-                    {
-                        connection.OpenConnection();
-                        dt = connection.ShowDataInGridView(query).Tables[0];
+    DataTable dt = new DataTable();
+    string query =
+        "SELECT " +
+            "borrow_history.id, " +
+            "CONCAT(borrower.id, ' - ', borrower.first_name, ' ', borrower.last_name), " +
+            "CONCAT(asset.id, ' - ', asset.name), " +
+            "borrow_history.date_requested, " +
+            "borrow_history.date_borrowed, " +
+            "borrow_history.date_returned, " +
+            "borrow_history.comments " +
+        "FROM borrow_history " +
+        "JOIN [user] borrower ON borrower.id = borrow_history.user_id " +
+        "JOIN asset ON asset.id = borrow_history.asset_id";
+    protected override void OnInitialized()
+    {
+        connection.OpenConnection();
+        dt = connection.ShowDataInGridView(query).Tables[0];
+    }
 
+    void approveModalShow(object id, object user, object asset)
+    {
+        showApprove = true;
 
-                    }
+        idApprove = Int32.Parse(id.ToString());
+
+        userApprove = user.ToString();
+
+        assetIdApproveFull = asset.ToString();
+        string[] assetComponents = assetIdApproveFull.Split(' ');
+        assetIdApprove = Int32.Parse(assetComponents[0]);
+    }
+
+    void approveModalCancel() => showApprove = false;
+
+    void approveModalOk()
+    {
+        showApprove = false;
+        BorrowHistoryService.ApproveBorrowRequest(idApprove, assetIdApprove);
+        NavigationManager.NavigateTo("/Borrow_history", forceLoad: true);
+    }
+
+    void returnModalShow(object id, object user, object asset)
+    {
+        showReturn = true;
+
+        idReturn = Int32.Parse(id.ToString());
+
+        userReturn = user.ToString();
+
+        assetIdReturnFull = asset.ToString();
+        string[] assetComponents = assetIdReturnFull.Split(' ');
+        assetIdReturn = Int32.Parse(assetComponents[0]);
+    }
+
+    void returnModalCancel() => showReturn = false;
+
+    void returnModalOk()
+    {
+        showReturn = false;
+        BorrowHistoryService.ReturnAsset(idReturn, assetIdReturn);
+        NavigationManager.NavigateTo("/Borrow_history", forceLoad: true);
+    }
 }

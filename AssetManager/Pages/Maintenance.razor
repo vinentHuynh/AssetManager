@@ -1,5 +1,8 @@
 @page "/Maintenance"
 @page "/Admin/Maintenance"
+@using System.Data;
+@using AssetManager.Model
+@inject NavigationManager NavigationManager
 @attribute [Authorize]
 
 
@@ -9,35 +12,44 @@
         <table class="table table-hover table-bordered">
 
             <thead class="">
-
                 <tr>
-                    @*can add headers dynamically here *@
-                    <th>Asset ID</th>
-                    <th>Maintenance Status ID</th>
-                    <th>Requested by</th>
+                    <th>ID</th>
+                    <th>Asset</th>
+                    <th>Maintenance Status</th>
+                    <th>Requested By</th>
                     <th>Description</th>
-                    <th>Date requested</th>
-                    <th>Date out</th>
-                    <th>Date in</th>
-                    <th>Last Update</th>
-
+                    <th>Date Requested</th>
+                    <th>Date Out</th>
+                    <th>Date In</th>
+                    <th>Out</th>
+                    <th>In</th>
                 </tr>
-
             </thead>
                 
             <tbody class="table-group-divider">
-                @*add here*@
 
-                <tr>
-                    <td>ga</td>
-                    <td>ga</td>
-                    <td>ga</td>
-                    <td>ga</td>
-                    <td>ga</td>
-                    <td>ga</td>
-                    <td>ga</td>
-                    <td>ga</td>
-                </tr>
+                @foreach (DataRow dr in dt.Rows)
+                {
+                    @if (dr.ItemArray[2].ToString() == "requested")
+                    {
+                        isDisabledOut = false;
+                    }
+                    else if (dr.ItemArray[2].ToString() == "under maintenance")
+                    {
+                        isDisabledIn = false;
+                    }
+                    <tr>
+                        @foreach (var item in dr.ItemArray)
+                        {
+                            <td>
+                                @item
+                            </td>
+                        }
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-primary" @onclick="() => outModalShow(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledOut"><span class="oi oi-account-logout"></span></button></td>
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-warning" @onclick="() => inModalShow(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledIn"><span class="oi oi-account-login"></span></button></td>
+                    </tr>
+                }
+
             </tbody>
 
 
@@ -46,98 +58,137 @@
 
 </div>
 
+@if (showOut)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@outModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
 
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Asset is Under Maintenance</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@outModalCancel"><span class="oi oi-x"></span></button>
+                </div>
 
-@code {
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to change the status of this maintenance request to "under maintenance"?</p>
+                    <p>Maintenance Request: @idOut</p>
+                    <p>Asset: @assetIdOutFull</p>
+                </div>
 
-}
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick=@outModalOk>Confirm</button>
+                    <button type="button" class="btn" @onclick="@outModalCancel">Cancel</button>
+                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*
-    To DO:
-        - create a form
-        - create input id (Number), Maintenance status id (), date out and in (date), description(text area)
-        - create Add/Submit and Reset button
-*@
-
-@*
-<div class="main h-100" >
-    <div class="container h-100">
-
-        <form class="h-100 overflow-auto">
-
-            <div class="mb-3">
-                <label for="id" class="form-label">Asset ID</label>
-                <input type="number" name="id" id="id" class="form-control" min="0"/>
             </div>
-
-            <div class="mb-3">
-                <label for="asset-name" class="form-label">Asset Name</label>
-                <select class="form-select form-select" id="asset-name" name="asset-name">
-                    
-                    <option value="">--Please choose an option--</option>
-                    <option value="name1">Name 1</option>
-                    <option value="name2">Name 2</option>
-                    <option value="name3">Name 3</option>
-                    <option value="name4">Name 4</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="date_out" class="form-label">Date Out</label>
-                <input type="date" class="form-control" name="date_out" id="date_out" />
-            </div>
-
-            <div class="mb-3">
-                <label for="date_in" class="form-label">Date In</label>
-                <input type="date" class="form-control" name="date_in" id="date_in" />
-            </div>
-            
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea  class="form-control overflow-auto" id="description" name="description" rows="5" placeholder="Write something" maxlength="159"></textarea>
-            </div>
-
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-primary">Reset</button>
-            </div>
-        </form>
-
+        </div>
     </div>
-</div>
+}
 
+@if (showIn)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@inModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
 
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Maintenance Resolved</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@inModalCancel"><span class="oi oi-x"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to change the status of this maintenance request to "resolved"?</p>
+                    <p>Maintenance Request: @idIn</p>
+                    <p>Asset: @assetIdInFull</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick=@inModalOk>Confirm</button>
+                    <button type="button" class="btn" @onclick="@inModalCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
 
 @code {
+    bool isDisabledOut = true;
+    bool isDisabledIn = true;
+    bool showOut = false;
+    bool showIn = false;
+    int idOut;
+    string assetIdOutFull;
+    int assetIdOut;
+    int idIn;
+    string assetIdInFull;
+    int assetIdIn;
 
+    private ConnectionDB connection = new ConnectionDB();
+    DataTable dt = new DataTable();
+    string query =
+        "SELECT " +
+            "main.id, " +
+            "CONCAT(asset.id, ' - ', asset.name), " +
+            "mainStat.value, " +
+            "CONCAT(req.id, ' - ', req.first_name, ' ', req.last_name), " +
+            "main.description, " +
+            "main.date_requested, " +
+            "main.date_out, " +
+            "main.date_in " +
+        "FROM maintenance main " +
+        "JOIN asset ON asset.id = main.asset_id " +
+        "JOIN maintenance_status mainStat ON mainStat.id = main.maintenance_status_id " +
+        "JOIN [user] req ON req.id = main.requested_by";
+    protected override void OnInitialized()
+    {
+        connection.OpenConnection();
+        dt = connection.ShowDataInGridView(query).Tables[0];
+    }
+
+    void outModalShow(object id, object asset)
+    {
+        showOut = true;
+
+        idOut = Int32.Parse(id.ToString());
+
+        assetIdOutFull = asset.ToString();
+        string[] assetComponents = assetIdOutFull.Split(' ');
+        assetIdOut = Int32.Parse(assetComponents[0]);
+    }
+
+    void outModalCancel() => showOut = false;
+
+    void outModalOk()
+    {
+        showOut = false;
+        MaintenanceService.MaintenanceOut(idOut, assetIdOut);
+        NavigationManager.NavigateTo("/Maintenance", forceLoad: true);
+    }
+
+    void inModalShow(object id, object asset)
+    {
+        showIn = true;
+
+        idIn = Int32.Parse(id.ToString());
+
+        assetIdInFull = asset.ToString();
+        string[] assetComponents = assetIdInFull.Split(' ');
+        assetIdIn = Int32.Parse(assetComponents[0]);
+    }
+
+    void inModalCancel() => showIn = false;
+
+    void inModalOk()
+    {
+        showIn = false;
+        MaintenanceService.MaintenanceIn(idIn, assetIdIn);
+        NavigationManager.NavigateTo("/Maintenance", forceLoad: true);
+    }
 }
-*@
-

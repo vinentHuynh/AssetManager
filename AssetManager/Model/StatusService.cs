@@ -17,13 +17,21 @@ public class StatusService
         return MapRowToStatus<Status>(dr);
     }
 
-    public static List<Status> GetAllStatuses()
+    public static List<Status> GetAllStatuses(int id)
     {
         // get all statuses
         ConnectionDB connectionDB = new ConnectionDB();
         connectionDB.OpenConnection();
 
-        string query = "SELECT id, value FROM status";
+        string query = "";
+        if (id == 1 || id == 2)
+        {
+            query = "SELECT id, value FROM status WHERE id = 1 OR id = 2";
+        }
+        else if (id == 7)
+        {
+            query = "SELECT id, value FROM status WHERE id = 1 OR id = 2 OR id = 7";
+        }
         SqlDataReader dr = connectionDB.DataReader(query);
 
         // map statuses to object list

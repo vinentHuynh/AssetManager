@@ -73,7 +73,7 @@ public class AssetService
             "'" + asset.name + "', " +
             "'" + asset.description + "', " +
             asset.location_id + ", " +
-            asset.status_id + ", " +
+            "1, " +
             asset.type_id + ", " +
             "'" + asset.manufacturer + "', " +
             "'" + asset.model + "', " +

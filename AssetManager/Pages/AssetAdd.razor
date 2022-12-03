@@ -96,13 +96,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <select class="form-control" style="width:100%" @bind="newStatusId">
-                                    <option selected></option>
-                                    @foreach (var status in statusList)
-                                    {
-                                        <option value="@status.id">@status.value</option>
-                                    }
-                                </select>
+                                <input class="form-control" type="text" style="width:100%" value="active" readonly />
                             </td>
                         </tr>
                     </tbody>
@@ -456,14 +450,12 @@
     Asset asset = new Asset();
 
     private List<Location> locList;
-    private List<Status> statusList;
     private List<AssetType> typeList;
     private List<UserPartial> userList;
 
     private string newName;
     private string newDesc;
     private int? newLocId;
-    private int? newStatusId;
     private int? newTypeId;
     private string newManufacturer;
     private string newModel;
@@ -483,7 +475,6 @@
     protected override async Task OnInitializedAsync()
     {
         locList = LocationService.GetAllLocations();
-        statusList = StatusService.GetAllStatuses();
         typeList = AssetTypeService.GetAllTypes();
         userList = UserPartialService.GetAllUsers();
 
@@ -513,10 +504,6 @@
         if (newLocId == null)
         {
             errorList.Add("Location");
-        }
-        if ( newStatusId == null)
-        {
-            errorList.Add("Status");
         }
         if ( newTypeId == null)
         {
@@ -550,7 +537,6 @@
         asset.name = newName;
         asset.description = newDesc;
         asset.location_id = newLocId != null ? newLocId : null;
-        asset.status_id = newStatusId != null ? newStatusId : null;
         asset.type_id = newTypeId != null ? newTypeId : null;
         asset.manufacturer = newManufacturer;
         asset.model = newModel;
