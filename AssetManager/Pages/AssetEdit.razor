@@ -452,12 +452,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+        asset = await AssetService.GetAssetById(asset.id);
+
         locList = LocationService.GetAllLocations();
-        statusList = StatusService.GetAllStatuses();
+        statusList = StatusService.GetAllStatuses(Int32.Parse(accessor[asset, "status_id"].ToString()));
         typeList = AssetTypeService.GetAllTypes();
         userList = UserPartialService.GetAllUsers();
-
-        asset = await AssetService.GetAssetById(asset.id);
 
         newName = accessor[asset, "name"].ToString();
         newDesc = accessor[asset, "description"].ToString();

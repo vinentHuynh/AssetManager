@@ -48,7 +48,7 @@ public class MaintenanceService
         connectionDB.DataReader(query);
         connectionDB.CloseConnection();
 
-        // update asset status
+        // update asset status to 4 (under maintenance)
         connectionDB.OpenConnection();
 
         query = "UPDATE asset SET status_id = 4 WHERE id = " + assetId;
@@ -74,7 +74,7 @@ public class MaintenanceService
         connectionDB.DataReader(query);
         connectionDB.CloseConnection();
 
-        // update asset status
+        // update asset status to 1 (active)
         connectionDB.OpenConnection();
 
         query = "UPDATE asset SET status_id = 1 WHERE id = " + assetId;

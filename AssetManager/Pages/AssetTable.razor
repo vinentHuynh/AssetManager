@@ -23,15 +23,6 @@
 </div>
 
 
-@*To Do:
-    - create a table
-    - create a caption[]
-    - create a table head
-    - add header cells
-    - create a table body
-
-*@
-
     
 <div class="container-sm table-responsive">
     
@@ -59,13 +50,21 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
-                    @if (Convert.ToBoolean(dr.ItemArray[5]) == true)
+                    @if (dr.ItemArray[5].ToString() == "1" || dr.ItemArray[5].ToString() == "7")
                     {
-                        isDisabled = false;
+                        isDisabledMaintenance = false;
                     }
                     else
                     {
-                        isDisabled = true;
+                        isDisabledMaintenance = true;
+                    }
+                    @if (Convert.ToBoolean(dr.ItemArray[6]) == true && dr.ItemArray[5].ToString() == "1")
+                    {
+                        isDisabledBorrow = false;
+                    }
+                    else
+                    {
+                        isDisabledBorrow = true;
                     }
                     <tr>
                         @for (int i = 0; i < 5; i++)
@@ -75,9 +74,9 @@
                             </td>
                                    
                         }
-                        <td style="text-align:center"><button type="button" class="btn btn-outline-secondary" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-list"></span></button></td>
-                        <td style="text-align:center"><button type="button" class="btn btn-outline-primary" @onclick="() => maintenance(dr.ItemArray[0], dr.ItemArray[1])"><span class="oi oi-tag"></span></button></td>
-                        <td style="text-align:center"><button type="button" class="btn btn-outline-warning" @onclick="() => borrow(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabled"><span class="oi oi-list-rich"></span></button></td>
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-secondary" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-magnifying-glass"></span></button></td>
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-primary" @onclick="() => maintenance(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledMaintenance"><span class="oi oi-tag"></span></button></td>
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-warning" @onclick="() => borrow(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledBorrow"><span class="oi oi-list-rich"></span></button></td>
                     </tr>
                 }
 
@@ -155,14 +154,15 @@
 @code {
     bool showMaintenance = false;
     bool showBorrow = false;
-    bool isDisabled = false;
+    bool isDisabledMaintenance = true;
+    bool isDisabledBorrow = false;
     string description = "";
     string comments = "";
 
     private ConnectionDB connection = new ConnectionDB();
     DataTable dt = new DataTable();
     string search = "";
-    string query = "select id,name,description,manufacturer,model,borrow from dbo.asset where deleted = 0";
+    string query = "select id,name,description,manufacturer,model,status_id,borrow from dbo.asset where deleted = 0";
     protected override void OnInitialized()
     {
         connection.OpenConnection();

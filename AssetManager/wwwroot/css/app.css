@@ -90,7 +90,7 @@ a, .btn-link {
     border-color: #05213D;
 }
 
-.btn-outline-primary {
+.btn-outline-primary, .btn-outline-primary:disabled {
     color: #003366;
     border-color: #003366;
 }
@@ -101,7 +101,7 @@ a, .btn-link {
     border-color: #003366;
 }
 
-.btn-outline-warning {
+.btn-outline-warning, .btn-outline-warning:disabled {
     color: #FF9933;
     border-color: #FF9933;
 }

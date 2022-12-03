@@ -30,11 +30,11 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
-                    @if (dr.ItemArray[2].ToString() == "2")
+                    @if (dr.ItemArray[2].ToString() == "requested")
                     {
                         isDisabledOut = false;
                     }
-                    else if (dr.ItemArray[2].ToString() == "3")
+                    else if (dr.ItemArray[2].ToString() == "under maintenance")
                     {
                         isDisabledIn = false;
                     }
@@ -45,8 +45,8 @@
                                 @item
                             </td>
                         }
-                        <td style="text-align:center"><button type="button" class="btn btn-outline-primary" @onclick="() => maintenanceOut(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledOut"><span class="oi oi-tag"></span></button></td>
-                        <td style="text-align:center"><button type="button" class="btn btn-outline-warning" @onclick="() => maintenanceIn(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledIn"><span class="oi oi-list-rich"></span></button></td>
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-primary" @onclick="() => outModalShow(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledOut"><span class="oi oi-account-logout"></span></button></td>
+                        <td style="text-align:center"><button type="button" class="btn btn-outline-warning" @onclick="() => inModalShow(dr.ItemArray[0], dr.ItemArray[1])" disabled="@isDisabledIn"><span class="oi oi-account-login"></span></button></td>
                     </tr>
                 }
 
@@ -58,11 +58,77 @@
 
 </div>
 
+@if (showOut)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@outModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
 
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Asset is Under Maintenance</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@outModalCancel"><span class="oi oi-x"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to change the status of this maintenance request to "under maintenance"?</p>
+                    <p>Maintenance Request: @idOut</p>
+                    <p>Asset: @assetIdOutFull</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick=@outModalOk>Confirm</button>
+                    <button type="button" class="btn" @onclick="@outModalCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (showIn)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog" @onclick="@inModalCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Maintenance Resolved</h4>
+                    <button type="button" class="btn btn-sm" @onclick="@inModalCancel"><span class="oi oi-x"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you wish to change the status of this maintenance request to "resolved"?</p>
+                    <p>Maintenance Request: @idIn</p>
+                    <p>Asset: @assetIdInFull</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick=@inModalOk>Confirm</button>
+                    <button type="button" class="btn" @onclick="@inModalCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     bool isDisabledOut = true;
     bool isDisabledIn = true;
+    bool showOut = false;
+    bool showIn = false;
+    int idOut;
+    string assetIdOutFull;
+    int assetIdOut;
+    int idIn;
+    string assetIdInFull;
+    int assetIdIn;
 
     private ConnectionDB connection = new ConnectionDB();
     DataTable dt = new DataTable();
@@ -86,18 +152,42 @@
         dt = connection.ShowDataInGridView(query).Tables[0];
     }
 
-    void maintenanceOut(object id, object assetId)
+    void outModalShow(object id, object asset)
     {
-        int idOut = Int32.Parse(id.ToString());
-        int assetIdOut = Int32.Parse(assetId.ToString());
+        showOut = true;
+
+        idOut = Int32.Parse(id.ToString());
+
+        assetIdOutFull = asset.ToString();
+        string[] assetComponents = assetIdOutFull.Split(' ');
+        assetIdOut = Int32.Parse(assetComponents[0]);
+    }
+
+    void outModalCancel() => showOut = false;
+
+    void outModalOk()
+    {
+        showOut = false;
         MaintenanceService.MaintenanceOut(idOut, assetIdOut);
         NavigationManager.NavigateTo("/Maintenance", forceLoad: true);
     }
 
-    void maintenanceIn(object id, object assetId)
+    void inModalShow(object id, object asset)
     {
-        int idIn = Int32.Parse(id.ToString());
-        int assetIdIn = Int32.Parse(assetId.ToString());
+        showIn = true;
+
+        idIn = Int32.Parse(id.ToString());
+
+        assetIdInFull = asset.ToString();
+        string[] assetComponents = assetIdInFull.Split(' ');
+        assetIdIn = Int32.Parse(assetComponents[0]);
+    }
+
+    void inModalCancel() => showIn = false;
+
+    void inModalOk()
+    {
+        showIn = false;
         MaintenanceService.MaintenanceIn(idIn, assetIdIn);
         NavigationManager.NavigateTo("/Maintenance", forceLoad: true);
     }
