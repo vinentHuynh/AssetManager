@@ -27,6 +27,11 @@ public class AssetService
 
         string purchaseDate = asset.purchase_date != null ? ("purchase_date = CAST('" + asset.purchase_date + "' AS DATETIME), ") : "purchase_date = NULL, ";
         string warrantyExp = asset.warranty_expiration != null ? ("warranty_expiration = CAST('" + asset.warranty_expiration + "' AS DATETIME), ") : "warranty_expiration = NULL, ";
+        string estimatedLife = asset.estimated_life != null ? ("estimated_life = " + asset.estimated_life + ", ") : "estimated_life = NULL, ";
+        string purchasePrice = asset.purchase_price != null ? ("purchase_price = " + asset.purchase_price+ ", ") : "purchase_price = NULL, ";
+        string itemCount = asset.item_count != null ? ("item_count = " + asset.item_count + ", ") : "item_count = NULL, ";
+        string createdBy = asset.created_by != null ? ("created_by = " + asset.created_by + ", ") : "created_by = NULL, ";
+        string updatedBy = asset.updated_by != null ? ("updated_by = " + asset.updated_by + ", ") : "updated_by = NULL, ";
 
         string query =
             "UPDATE asset " +
@@ -41,16 +46,16 @@ public class AssetService
                 "serial_number = '" + asset.serial_number + "', " +
                 purchaseDate +
                 warrantyExp +
-                "estimated_life = '" + asset.estimated_life + "', " +
-                "purchase_price = '" + asset.purchase_price + "', " +
+                estimatedLife +
+                purchasePrice +
                 "comments = '" + asset.comments + "', " +
-                "item_count = '" + asset.item_count + "', " +
-                "created_by = '" + asset.created_by + "', " +
-                "updated_by = '" + asset.updated_by + "', " +
+                itemCount +
+                createdBy +
+                updatedBy +
                 "last_updated = CAST('" + asset.last_updated + "' AS DATETIME), " +
                 "photo_url = '" + asset.photo_url + "', " +
                 "path = '" + asset.path + "', " +
-                "borrow = '" + asset.borrow + "'" +
+                "borrow = '" + asset.borrow + "' " +
             "WHERE id = " + asset.id;
         connectionDB.DataReader(query);
 

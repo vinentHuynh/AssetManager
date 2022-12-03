@@ -74,6 +74,7 @@
                         <tr>
                             <td>
                                 <select class="form-control" style="width:100%" @bind="newLocId">
+                                    <option selected></option>
                                     @foreach (var loc in locList)
                                     {
                                         <option value="@loc.id">@loc.value</option>
@@ -96,6 +97,7 @@
                         <tr>
                             <td>
                                 <select class="form-control" style="width:100%" @bind="newStatusId">
+                                    <option selected></option>
                                     @foreach (var status in statusList)
                                     {
                                         <option value="@status.id">@status.value</option>
@@ -118,9 +120,10 @@
                         <tr>
                             <td>
                                 <select class="form-control" style="width:100%" @bind="newTypeId">
-                                    @foreach (var type in typeList)
+                                    <option selected></option>
+                                    @foreach (var assetType in typeList)
                                     {
-                                        <option value="@type.id">@type.value</option>
+                                        <option value="@assetType.id">@assetType.value</option>
                                     }
                                 </select>
                             </td>
@@ -310,6 +313,7 @@
                         <tr>
                             <td>
                                 <select class="form-control" style="width:100%" @bind="newCreatedBy">
+                                    <option selected></option>
                                     @foreach (var user in userList)
                                     {
                                         <option value="@user.id">@user.id - @user.first_name @user.last_name</option>
@@ -332,6 +336,7 @@
                         <tr>
                             <td>
                                 <select class="form-control" style="width:100%" @bind="newUpdatedBy">
+                                    <option selected></option>
                                     @foreach (var user in userList)
                                     {
                                         <option value="@user.id">@user.id - @user.first_name @user.last_name</option>
@@ -454,23 +459,23 @@
     private List<Status> statusList;
     private List<AssetType> typeList;
     private List<UserPartial> userList;
-    
+
     private string newName;
     private string newDesc;
-    private int newLocId;
-    private int newStatusId;
-    private int newTypeId;
+    private int? newLocId;
+    private int? newStatusId;
+    private int? newTypeId;
     private string newManufacturer;
     private string newModel;
     private string newSerial;
     private DateTime? newPurchaseDate;
     private DateTime? newWarrantyExp;
-    private string? newEstimatedLife;
+    private string newEstimatedLife;
     private string newPurchasePrice;
     private string newComments;
     private string newItemCount;
-    private int newCreatedBy;
-    private int newUpdatedBy;
+    private int? newCreatedBy;
+    private int? newUpdatedBy;
     private string newPhotoUrl;
     private string newPath;
     private bool newBorrow;
@@ -499,23 +504,23 @@
         List<string> errorList = new List<string>();
         if (newName == null)
         {
-            errorList.Add("name");
+            errorList.Add("Name");
         }
         if ( newDesc == null)
         {
-            errorList.Add("description");
+            errorList.Add("Description");
         }
         if (newLocId == null)
         {
-            errorList.Add("location");
+            errorList.Add("Location");
         }
         if ( newStatusId == null)
         {
-            errorList.Add("status");
+            errorList.Add("Status");
         }
         if ( newTypeId == null)
         {
-            errorList.Add("type");
+            errorList.Add("Type");
         }
         if ( newCreatedBy == null)
         {
@@ -544,9 +549,9 @@
             return;
         asset.name = newName;
         asset.description = newDesc;
-        asset.location_id = newLocId;
-        asset.status_id = newStatusId;
-        asset.type_id = newTypeId;
+        asset.location_id = newLocId != null ? newLocId : null;
+        asset.status_id = newStatusId != null ? newStatusId : null;
+        asset.type_id = newTypeId != null ? newTypeId : null;
         asset.manufacturer = newManufacturer;
         asset.model = newModel;
         asset.serial_number = newSerial;
@@ -556,8 +561,8 @@
         asset.purchase_price = newPurchasePrice != null ? Convert.ToDouble(newPurchasePrice) : null;
         asset.comments = newComments;
         asset.item_count = newItemCount == null ? null : Int32.Parse(newItemCount);
-        asset.created_by = newCreatedBy == null ? null : newCreatedBy;
-        asset.updated_by = newUpdatedBy == null ? null : newUpdatedBy;
+        asset.created_by = newCreatedBy;
+        asset.updated_by = newUpdatedBy;
         asset.created = DateTime.Now;
         asset.last_updated = DateTime.Now;
         asset.photo_url = newPhotoUrl;

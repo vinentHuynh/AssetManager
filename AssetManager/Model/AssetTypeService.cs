@@ -5,6 +5,18 @@ namespace AssetManager.Model;
 
 public class AssetTypeService
 {
+    public static AssetType GetTypeById(int id)
+    {
+        ConnectionDB connectionDB = new ConnectionDB();
+        connectionDB.OpenConnection();
+
+        string query = "SELECT id, value FROM type WHERE id = " + id;
+        SqlDataReader dr = connectionDB.DataReader(query);
+        dr.Read();
+
+        return MapRowToType<AssetType>(dr);
+    }
+
     public static List<AssetType> GetAllTypes()
     {
         // get all types

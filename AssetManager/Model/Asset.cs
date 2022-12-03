@@ -5,9 +5,9 @@ public class Asset
     public int id { get; set; }
     public string name { get; set; }
     public string description { get; set; }
-    public int location_id { get; set; }
-    public int status_id { get; set; }
-    public int type_id { get; set; }
+    public int? location_id { get; set; }
+    public int? status_id { get; set; }
+    public int? type_id { get; set; }
     public string manufacturer { get; set; }
     public string model { get; set; }
     public string serial_number { get; set; }
