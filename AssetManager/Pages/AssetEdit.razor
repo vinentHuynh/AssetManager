@@ -118,9 +118,9 @@
                         <tr>
                             <td>
                                 <select class="form-control" style="width:100%" @bind="newTypeId">
-                                    @foreach (var type in typeList)
+                                    @foreach (var assetType in typeList)
                                     {
-                                        <option value="@type.id">@type.value</option>
+                                        <option value="@assetType.id">@assetType.value</option>
                                     }
                                 </select>
                             </td>
@@ -440,15 +440,15 @@
     private string newSerial;
     private DateTime? newPurchaseDate;
     private DateTime? newWarrantyExp;
-    private int newEstimatedLife;
-    private double newPurchasePrice;
+    private int? newEstimatedLife;
+    private double? newPurchasePrice;
     private string newComments;
-    private int newItemCount;
-    private int newCreatedBy;
-    private int newUpdatedBy;
+    private int? newItemCount;
+    private int? newCreatedBy;
+    private int? newUpdatedBy;
     private string newPhotoUrl;
     private string newPath;
-    private bool newBorrow;
+    private bool? newBorrow;
 
     protected override async Task OnInitializedAsync()
     {
@@ -469,12 +469,12 @@
         newSerial = accessor[asset, "serial_number"].ToString();
         newPurchaseDate = (accessor[asset, "purchase_date"] != null && accessor[asset, "purchase_date"].ToString() != DateTime.MinValue.AddYears(1899).ToString()) ? DateTime.Parse(accessor[asset, "purchase_date"].ToString()) : null;
         newWarrantyExp = (accessor[asset, "warranty_expiration"] != null && accessor[asset, "warranty_expiration"].ToString() != DateTime.MinValue.AddYears(1899).ToString()) ? DateTime.Parse(accessor[asset, "warranty_expiration"].ToString()) : null;
-        newEstimatedLife = Int32.Parse(accessor[asset, "estimated_life"].ToString());
-        newPurchasePrice = Double.Parse(accessor[asset, "purchase_price"].ToString());
+        newEstimatedLife = accessor[asset, "estimated_life"] != null ? Int32.Parse(accessor[asset, "estimated_life"].ToString()) : null;
+        newPurchasePrice = accessor[asset, "purchase_price"] != null ? Double.Parse(accessor[asset, "purchase_price"].ToString()) : null;
         newComments = accessor[asset, "comments"].ToString();
-        newItemCount = Int32.Parse(accessor[asset, "item_count"].ToString());
-        newCreatedBy = Int32.Parse(accessor[asset, "created_by"].ToString());
-        newUpdatedBy = Int32.Parse(accessor[asset, "updated_by"].ToString());
+        newItemCount = accessor[asset, "item_count"] != null ? Int32.Parse(accessor[asset, "item_count"].ToString()) : null;
+        newCreatedBy = accessor[asset, "created_by"] != null ? Int32.Parse(accessor[asset, "created_by"].ToString()) : null;
+        newUpdatedBy = accessor[asset, "updated_by"] != null ? Int32.Parse(accessor[asset, "updated_by"].ToString()) : null;
         newPhotoUrl = accessor[asset, "photo_url"].ToString();
         newPath = accessor[asset, "path"].ToString();
     }

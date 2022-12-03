@@ -5,6 +5,18 @@ namespace AssetManager.Model;
 
 public class StatusService
 {
+    public static Status GetStatusById(int id)
+    {
+        ConnectionDB connectionDB = new ConnectionDB();
+        connectionDB.OpenConnection();
+
+        string query = "SELECT id, value FROM status WHERE id = " + id;
+        SqlDataReader dr = connectionDB.DataReader(query);
+        dr.Read();
+
+        return MapRowToStatus<Status>(dr);
+    }
+
     public static List<Status> GetAllStatuses()
     {
         // get all statuses

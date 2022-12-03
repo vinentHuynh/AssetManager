@@ -24,30 +24,348 @@
 
         <div class="row row-cols-1 row-cols-md-2 text-center g-4">
             
-            @for (int i = 0; i < fields.Count; i++)
-            {
-                string fieldName = fields[i].Key;
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@asset.id</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                <div class="col">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@name</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>@fields[i].Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>@accessor[asset, fieldName]</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@desc</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                </div>
-            }
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@loc.value</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@status.value</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@assetType.value</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Manufacturer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@manufacturer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@model</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Serial Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@serial</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Purchase Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@purchaseDate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Warranty Expiration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@warrantyExp</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Estimated Life</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@estimatedLife</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Purchase Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@purchasePrice</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@comments</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@itemCount</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@created</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Created By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@createdBy.id - @createdBy.first_name @createdBy.last_name</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Updated By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@updatedBy.id - @updatedBy.first_name @updatedBy.last_name</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@lastUpdated</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Photo URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@photoUrl</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Path</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@path</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Borrowable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@borrow</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
         </div>
 
+    </div>
+
+    <div class="table-actions">
+        <div class="table-actions-1">
+            <a href="/asset" class="btn btn-primary" title="Go back to asset">Back</a>
+        </div>
+        <div class="table-actions-2">
+            <button type="button" class="btn btn-primary" @onclick="() => editAsset()">Edit</button>
+            <button type="button" class="btn btn-danger" @onclick="() => deleteModalShow()">Delete</button>
+        </div>
     </div>
 
 </div>
@@ -82,37 +400,57 @@
 }
 
 @code {
-    List<KeyValuePair<string, string>> fields = new List<KeyValuePair<string, string>>();
     static Type type = typeof(Asset);
     TypeAccessor accessor = TypeAccessor.Create(type);
     bool showDelete = false;
 
+    private string name;
+    private string desc;
+    private Location loc;
+    private Status status;
+    private AssetType assetType;
+    private string manufacturer;
+    private string model;
+    private string serial;
+    private DateTime? purchaseDate;
+    private DateTime? warrantyExp;
+    private int? estimatedLife;
+    private double? purchasePrice;
+    private string comments;
+    private int? itemCount;
+    private DateTime created;
+    private UserPartial createdBy;
+    private UserPartial updatedBy;
+    private DateTime lastUpdated;
+    private string photoUrl;
+    private string path;
+    private string borrow;
+
     protected override async Task OnInitializedAsync()
     {
-        fields.Add(new KeyValuePair<string, string>("id", "ID"));
-        fields.Add(new KeyValuePair<string, string>("name", "Name"));
-        fields.Add(new KeyValuePair<string, string>("description", "Description"));
-        fields.Add(new KeyValuePair<string, string>("location_id", "Location"));
-        fields.Add(new KeyValuePair<string, string>("status_id", "Status"));
-        fields.Add(new KeyValuePair<string, string>("type_id", "Type"));
-        fields.Add(new KeyValuePair<string, string>("manufacturer", "Manufacturer"));
-        fields.Add(new KeyValuePair<string, string>("model", "Model"));
-        fields.Add(new KeyValuePair<string, string>("serial_number", "Serial Number"));
-        fields.Add(new KeyValuePair<string, string>("purchase_date", "Purchase Date"));
-        fields.Add(new KeyValuePair<string, string>("warranty_expiration", "Warranty Expiration"));
-        fields.Add(new KeyValuePair<string, string>("estimated_life", "Estimated Life"));
-        fields.Add(new KeyValuePair<string, string>("purchase_price", "Purchase Price"));
-        fields.Add(new KeyValuePair<string, string>("comments", "Comments"));
-        fields.Add(new KeyValuePair<string, string>("item_count", "Item Count"));
-        fields.Add(new KeyValuePair<string, string>("created", "Created"));
-        fields.Add(new KeyValuePair<string, string>("created_by", "Created By"));
-        fields.Add(new KeyValuePair<string, string>("updated_by", "Updated By"));
-        fields.Add(new KeyValuePair<string, string>("last_updated", "Last Updated"));
-        fields.Add(new KeyValuePair<string, string>("photo_url", "Photo URL"));
-        fields.Add(new KeyValuePair<string, string>("path", "Path"));
-        fields.Add(new KeyValuePair<string, string>("borrow", "Borrowable"));
-
         asset = await AssetService.GetAssetById(asset.id);
+
+        name = accessor[asset, "name"].ToString();
+        desc = accessor[asset, "description"].ToString();
+        loc = LocationService.GetLocationById(Int32.Parse(accessor[asset, "location_id"].ToString()));
+        status = StatusService.GetStatusById(Int32.Parse(accessor[asset, "status_id"].ToString()));
+        assetType = AssetTypeService.GetTypeById(Int32.Parse(accessor[asset, "type_id"].ToString()));
+        manufacturer = accessor[asset, "manufacturer"].ToString();
+        model = accessor[asset, "model"].ToString();
+        serial = accessor[asset, "serial_number"].ToString();
+        purchaseDate = (accessor[asset, "purchase_date"] != null && accessor[asset, "purchase_date"].ToString() != DateTime.MinValue.AddYears(1899).ToString()) ? DateTime.Parse(accessor[asset, "purchase_date"].ToString()) : null;
+        warrantyExp = (accessor[asset, "warranty_expiration"] != null && accessor[asset, "warranty_expiration"].ToString() != DateTime.MinValue.AddYears(1899).ToString()) ? DateTime.Parse(accessor[asset, "warranty_expiration"].ToString()) : null;
+        estimatedLife = accessor[asset, "estimated_life"] != null ? Int32.Parse(accessor[asset, "estimated_life"].ToString()) : null;
+        purchasePrice = accessor[asset, "purchase_price"] != null ? Double.Parse(accessor[asset, "purchase_price"].ToString()) : null;
+        comments = accessor[asset, "comments"].ToString();
+        itemCount = accessor[asset, "item_count"] != null ? Int32.Parse(accessor[asset, "item_count"].ToString()) : null;
+        created = DateTime.Parse(accessor[asset, "created"].ToString());
+        createdBy = UserPartialService.GetUserById(Int32.Parse(accessor[asset, "created_by"].ToString()));
+        updatedBy = UserPartialService.GetUserById(Int32.Parse(accessor[asset, "updated_by"].ToString()));
+        lastUpdated = DateTime.Parse(accessor[asset, "last_updated"].ToString());
+        photoUrl = accessor[asset, "photo_url"].ToString();
+        path = accessor[asset, "path"].ToString();
+        borrow = accessor[asset, "borrow"] != null ? accessor[asset, "borrow"].ToString() : null;
     }
 
     void editAsset()

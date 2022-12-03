@@ -5,6 +5,18 @@ namespace AssetManager.Model;
 
 public class UserPartialService
 {
+    public static UserPartial GetUserById(int id)
+    {
+        ConnectionDB connectionDB = new ConnectionDB();
+        connectionDB.OpenConnection();
+
+        string query = "SELECT id, first_name, last_name FROM [user] WHERE id = " + id;
+        SqlDataReader dr = connectionDB.DataReader(query);
+        dr.Read();
+
+        return MapRowToUser<UserPartial>(dr);
+    }
+
     public static List<UserPartial> GetAllUsers()
     {
         // get all users
