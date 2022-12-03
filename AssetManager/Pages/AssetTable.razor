@@ -48,8 +48,8 @@
                     <th>Manufacturer</th>
                     <th>Model</th>
                     <th>Details</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Maintenance</th>
+                    <th>Borrow</th>
                 </tr>
 
             </thead>
@@ -67,9 +67,9 @@
                             </td>
                                    
                         }
-                        <td><button type="button" class="btn btn-outline-secondary" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-list"></span></button></td>
-                        <td><button type="button" class="btn btn-outline-primary" @onclick="() => editAsset(dr.ItemArray[0])"><span class="oi oi-pencil"></span></button></td>
-                        <td><button type="button" class="btn btn-outline-danger" @onclick="() => deleteModalShow(dr.ItemArray[0], dr.ItemArray[1])"><span class="oi oi-trash"></span></button></td>
+                        <td style="text-align: center"><button type="button" class="btn btn-outline-secondary" @onclick="() => fullAsset(dr.ItemArray[0])"><span class="oi oi-list"></span></button></td>
+                        <td style="text-align: center"><button type="button" class="btn btn-outline-primary" @onclick="() => maintenance(dr.ItemArray[0])"><span class="oi oi-tag"></span></button></td>
+                        <td style="text-align: center"><button type="button" class="btn btn-outline-warning" @onclick="() => borrow(dr.ItemArray[0])"><span class="oi oi-list-rich"></span></button></td>
                     </tr>
                 }
 
@@ -134,17 +134,16 @@
         NavigationManager.NavigateTo("/AssetFull");
     }
 
-    void editAsset(object id)
+    void maintenance(object id)
     {
         this.asset.id = Int32.Parse(id.ToString());
-        NavigationManager.NavigateTo("/AssetEdit");
+        NavigationManager.NavigateTo("/Maintenance");
     }
 
-    void deleteModalShow(object id, object name)
+    void borrow(object id)
     {
         this.asset.id = Int32.Parse(id.ToString());
-        this.asset.name = name.ToString();
-        showDelete = true;
+        NavigationManager.NavigateTo("/Borrow_history");
     }
 
     void deleteModalCancel() => showDelete = false;

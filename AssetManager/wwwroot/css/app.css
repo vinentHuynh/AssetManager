@@ -101,6 +101,17 @@ a, .btn-link {
     border-color: #003366;
 }
 
+.btn-outline-warning {
+    color: #FF9933;
+    border-color: #FF9933;
+}
+
+.btn-outline-warning:hover {
+    color: #fff;
+    background-color: #FF9933;
+    border-color: #FF9933;
+}
+
 .content {
     padding-top: 1.1rem;
 }
