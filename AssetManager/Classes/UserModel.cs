@@ -43,10 +43,9 @@ namespace AssetManager.Classes
                     verify = true;                         
             }
             connection.CloseConnection();
-
-            //TO-DO: generate unique tokens per user
+            
             if (verify)
-                token = "1";
+                token = email;
             else
                 token = null;
             return verify;

@@ -1,5 +1,7 @@
 @page "/AssetFull"
 
+@attribute [Authorize]
+
 @inject Model.Asset asset
 @inject NavigationManager NavigationManager
 @using AssetManager.Model
@@ -14,10 +16,12 @@
         <div class="table-actions-1">
             <a href="/asset" class="btn btn-primary" title="Go back to asset">Back</a>
         </div>
-        <div  class="table-actions-2">
+        <AuthorizeView Roles="Admin">
+            <div  class="table-actions-2">
             <button type="button" class="btn btn-primary" @onclick="() => editAsset()">Edit</button>
             <button type="button" class="btn btn-danger" @onclick="() => deleteModalShow()">Delete</button>
         </div>
+        </AuthorizeView>        
     </div>
 
     <div class="container-fluid table-container">

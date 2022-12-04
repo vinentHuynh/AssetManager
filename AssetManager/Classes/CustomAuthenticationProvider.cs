@@ -20,9 +20,30 @@ namespace AssetManager.Classes
                 var userInfo = await SecureStorage.GetAsync("accounttoken");
                 if (userInfo != null)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, "AdminUser") };
+                    ConnectionDB connection = new ConnectionDB();
+                    connection.OpenConnection();
+                    string query = "SELECT role FROM dbo.[user] WHERE email='" + userInfo + "'";
+                    Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
+                    int role = 0;
+                    while (dr.Read())
+                    {
+                        role = dr.GetInt32(0);
+                    }
+                    string roleString;
+                    if (role == 0)
+                        roleString = "Admin";
+                    else
+                        roleString = "User";
+                    connection.CloseConnection();
+                    
+                    var claims = new[] { new Claim(ClaimTypes.Name, userInfo), new Claim(ClaimTypes.Role, roleString) };
                     identity = new ClaimsIdentity(claims, "Server Authentication");
+                    
                     return new AuthenticationState(new ClaimsPrincipal(identity));
+                }
+                else
+                {
+                    return new AuthenticationState(new ClaimsPrincipal());
                 }
                 
             }

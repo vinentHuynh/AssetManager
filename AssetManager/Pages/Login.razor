@@ -1,4 +1,5 @@
-﻿@page "/login" 
+﻿@page "/"
+@page "/login" 
 @using AssetManager.Classes
 @using AssetManager.Model
 @using System.ComponentModel.DataAnnotations
@@ -22,10 +23,13 @@ TO-DO
             <EditForm Model="@userModel" OnValidSubmit="@SuccessfulLogin">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
- 
+
+                <div>
+                    <span class = "text-danger">@LoginMessage</span>
+                </div>
                 <div class="form-group">
                    <label>Username</label>
-                   <InputText id="email" @bind-Value="userModel.email" class="form-control" />
+                   <InputText type="email" @bind-Value="userModel.email" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Password</label>
@@ -35,45 +39,39 @@ TO-DO
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                 </div>
                 <NavLink href="/User" class="btn btn-link">Register</NavLink>
+
             </EditForm>            
         </div>
     </div>
 </div>
 
+
 @code {
+    string LoginMessage;
+    int role = 1;
     public async Task SuccessfulLogin() {
         var success = userModel.LoginValidate(out string token);
 
-        if (!success)
-            Console.WriteLine("Request failed.");
+        if (success && token != null)
+        {
+            ConnectionDB connection = new ConnectionDB();
+            connection.OpenConnection();
+            string query = "SELECT role FROM dbo.[user] WHERE email='" + token + "'";
+            Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
+            while (dr.Read()){
+                role = dr.GetInt32(0);
+            }
 
-        await AuthStateProvider.Login(token);
-        if (userModel.email == "admin@gmail.com")
-            NavigationManager.NavigateTo("/Admin");
+            await AuthStateProvider.Login(token);
+            if (role == 0)
+                NavigationManager.NavigateTo("/Admin");
+            else
+                NavigationManager.NavigateTo("/Asset");
+        }
         else
-            NavigationManager.NavigateTo("/Asset");
-    }
+            LoginMessage = "Invalid username or password.";
 
-   /* public bool isAdmin(){
-        int role = 1;
-        string query = "SELECT role FROM dbo.[user] WHERE email='" + userModel.Username + "'";
-        ConnectionDB connection = new ConnectionDB();
-        connection.OpenConnection();
-        Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
-        dr.Read();
-        for(int i = 0; i < dr.FieldCount; i++)
-            role = dr.GetInt32(i);
-        
-        if (role == 0)
-            return true;
-        else
-            return false;
-    }
-    */
-
-    public async void logout(){
-        await AuthStateProvider.Logout();
-        NavigationManager.NavigateTo("/login");
+           
     }
     
    
