@@ -6,11 +6,13 @@
 @using Microsoft.Data.SqlClient
 @using System.Data
 @using AssetManager.Model
+@using AssetManager.Classes
 @inject NavigationManager NavigationManager
-@inject Model.Asset asset
+@inject Asset asset
+@inject UserModel user
 
 <div class="main container-sm">
-   <h1 class="text-center"> Assets</h1>
+   <h1 class="text-center">Assets</h1>
    
     <div class="input-group mb-3 align justify-content-end">
         <div class="mx-3">
@@ -163,12 +165,12 @@
     DataTable dt = new DataTable();
     string search = "";
     string query = "select id,name,description,manufacturer,model,status_id,borrow from dbo.asset where deleted = 0";
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
+        user = await UserService.GetUserByEmail(user.email);
+
         connection.OpenConnection();
         dt = connection.ShowDataInGridView(query).Tables[0];
-
-
     }
 
     void fullAsset(object id)
@@ -188,7 +190,7 @@
 
     void maintenanceModalOk()
     {
-        MaintenanceService.CreateMaintenanceRequest(this.asset.id, description);
+        MaintenanceService.CreateMaintenanceRequest(this.asset.id, this.user.id, description);
         showMaintenance = false;
         NavigationManager.NavigateTo("/Maintenance");
     }
@@ -204,7 +206,7 @@
 
     void borrowModalOk()
     {
-        BorrowHistoryService.CreateBorrowRequest(this.asset.id, comments);
+        BorrowHistoryService.CreateBorrowRequest(this.user.id, this.asset.id, comments);
         showBorrow= false;
         NavigationManager.NavigateTo("/Borrow_history");
     }

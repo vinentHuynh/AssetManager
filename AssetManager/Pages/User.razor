@@ -27,26 +27,26 @@
             
                 <div class="mb-3">
                     <label for="first_name" class="form-label">First Name</label>
-                    <InputText type="text" @bind-Value="user.FirstName" class="form-control" />
+                    <InputText type="text" @bind-Value="user.first_name" class="form-control" />
                 </div>
             
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Last Name</label>
-                    <InputText type="text" @bind-Value="user.LastName" class="form-control" />
+                    <InputText type="text" @bind-Value="user.last_name" class="form-control" />
                 </div>
             
                 <div class="mb-3">
                     <label for="phone_number" class="form-label">Phone Number</label>
-                    <InputText @bind-Value="user.PhoneNumber" class="form-control" pattern="[0-9]+" />
+                    <InputText @bind-Value="user.phone_number" class="form-control" pattern="[0-9]+" />
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <InputText type="email" @bind-Value="user.Username" class="form-control"  />
+                    <InputText type="email" @bind-Value="user.email" class="form-control"  />
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <InputText type="password" @bind-Value="user.Password" class="form-control" />
+                    <InputText type="password" @bind-Value="user.password" class="form-control" />
                 </div>
                 <div class="mb-3">
                     <button type="submit"  @onclick="ModalShow" class="btn btn-primary">Add</button>
@@ -98,10 +98,10 @@
                     <tbody>
                         <tr>
                             @*<td>@user.Id</td>*@                            
-                            <td>@user.FirstName</td>
-                            <td>@user.LastName</td>
-                            <td>@user.PhoneNumber</td>
-                            <td>@user.Username</td>
+                            <td>@user.first_name</td>
+                            <td>@user.last_name</td>
+                            <td>@user.phone_number</td>
+                            <td>@user.email</td>
                         </tr>
                     </tbody>
 
@@ -118,7 +118,7 @@
         ConnectionDB connection = new ConnectionDB();
         connection.OpenConnection();
         string query = "INSERT INTO dbo.[user](first_name, last_name, phone_number, email, password, role) VALUES('"
-            + user.FirstName + "', '" + user.LastName + "', '" + user.PhoneNumber + "', '" + user.Username + "', '" + user.Password + "', 1)";
+            + user.first_name + "', '" + user.last_name + "', '" + user.phone_number + "', '" + user.email + "', '" + user.password + "', 1)";
         connection.DataReader(query);
     }
 

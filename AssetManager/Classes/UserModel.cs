@@ -9,23 +9,23 @@ namespace AssetManager.Classes
 {
     public class UserModel
     {
-        public int Id { get; set; }
+        public int id { get; set; }
 
-        public string FirstName { get; set; }
+        public string first_name { get; set; }
 
-        public string LastName { get; set; }
+        public string last_name { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string phone_number { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string email { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string password { get; set; }
 
-        public int Role { get; set; }
+        public int role { get; set; }
 
         public bool LoginValidate(out string token)
         {
@@ -33,13 +33,13 @@ namespace AssetManager.Classes
             ConnectionDB connection = new ConnectionDB();
             connection.OpenConnection();
 
-            string query = "SELECT password FROM dbo.[user] WHERE email = '" + Username + "'";
+            string query = "SELECT password FROM dbo.[user] WHERE email = '" + email + "'";
             Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
             dr.Read();
             for(int i = 0; i < dr.FieldCount; i++)
             {
                 string check = dr.GetString(i);
-                if (check == Password)                
+                if (check == password)                
                     verify = true;                         
             }
             connection.CloseConnection();

@@ -2,7 +2,7 @@
 
 public class MaintenanceService
 {
-    public static void CreateMaintenanceRequest(int assetId, string description)
+    public static void CreateMaintenanceRequest(int assetId, int userId, string description)
     {
         ConnectionDB connectionDB = new ConnectionDB();
         
@@ -12,7 +12,7 @@ public class MaintenanceService
         string query = "INSERT INTO maintenance VALUES (" +
             assetId + ", " +
             "2, " +
-            "1, " + // todo user
+            userId + ", " +
             "'" + description + "', " +
             "CAST('" + DateTime.Now + "' AS DATETIME), " +
             "NULL, " +
