@@ -28,6 +28,7 @@ public static class MauiProgram
 		builder.Services.AddScoped<CustomAuthenticationProvider>();
 		builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthenticationProvider>());
 		builder.Services.AddSingleton<Asset>();
+		builder.Services.AddSingleton<UserModel>();
 
 		return builder.Build();
 	}

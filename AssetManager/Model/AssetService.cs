@@ -30,7 +30,6 @@ public class AssetService
         string estimatedLife = asset.estimated_life != null ? ("estimated_life = " + asset.estimated_life + ", ") : "estimated_life = NULL, ";
         string purchasePrice = asset.purchase_price != null ? ("purchase_price = " + asset.purchase_price+ ", ") : "purchase_price = NULL, ";
         string itemCount = asset.item_count != null ? ("item_count = " + asset.item_count + ", ") : "item_count = NULL, ";
-        string createdBy = asset.created_by != null ? ("created_by = " + asset.created_by + ", ") : "created_by = NULL, ";
         string updatedBy = asset.updated_by != null ? ("updated_by = " + asset.updated_by + ", ") : "updated_by = NULL, ";
 
         string query =
@@ -50,7 +49,6 @@ public class AssetService
                 purchasePrice +
                 "comments = '" + asset.comments + "', " +
                 itemCount +
-                createdBy +
                 updatedBy +
                 "last_updated = CAST('" + asset.last_updated + "' AS DATETIME), " +
                 "photo_url = '" + asset.photo_url + "', " +

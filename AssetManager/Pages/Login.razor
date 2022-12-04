@@ -1,8 +1,10 @@
 ﻿@page "/login" 
 @using AssetManager.Classes
+@using AssetManager.Model
 @using System.ComponentModel.DataAnnotations
 @inject NavigationManager NavigationManager
 @inject CustomAuthenticationProvider AuthStateProvider
+@inject Classes.UserModel userModel
 
 @*
 TO-DO
@@ -23,11 +25,11 @@ TO-DO
  
                 <div class="form-group">
                    <label>Username</label>
-                   <InputText id="email" @bind-Value="userModel.Username" class="form-control" />
+                   <InputText id="email" @bind-Value="userModel.email" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <InputText id="password" type="password" @bind-Value="userModel.Password" class="form-control" />
+                    <InputText id="password" type="password" @bind-Value="userModel.password" class="form-control" />
                 </div>
                 <div class="form-group mt-1">
                     <button type="submit" class="btn btn-primary w-100">Login</button>
@@ -39,17 +41,14 @@ TO-DO
 </div>
 
 @code {
-    public UserModel userModel = new UserModel();
-
     public async Task SuccessfulLogin() {
         var success = userModel.LoginValidate(out string token);
 
         if (!success)
             Console.WriteLine("Request failed.");
 
-
         await AuthStateProvider.Login(token);
-        if (userModel.Username == "admin@gmail.com")
+        if (userModel.email == "admin@gmail.com")
             NavigationManager.NavigateTo("/Admin");
         else
             NavigationManager.NavigateTo("/Asset");

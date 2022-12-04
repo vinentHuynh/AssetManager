@@ -2,7 +2,7 @@
 
 public class BorrowHistoryService
 {
-    public static void CreateBorrowRequest(int assetId, string comments)
+    public static void CreateBorrowRequest(int userId, int assetId, string comments)
     {
         ConnectionDB connectionDB = new ConnectionDB();
 
@@ -10,7 +10,7 @@ public class BorrowHistoryService
         connectionDB.OpenConnection();
 
         string query = "INSERT INTO borrow_history VALUES (" +
-            "1, " + // todo user
+            userId + ", " +
             assetId + ", " +
             "CAST('" + DateTime.Now + "' AS DATETIME), " +
             "NULL, " +
