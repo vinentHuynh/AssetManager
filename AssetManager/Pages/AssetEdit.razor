@@ -420,6 +420,27 @@
 
 </div>
 
+@if (showError)
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.6);" aria-modal="true" role="dialog">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body ">
+
+                    <p class="text-black">@output</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" @onclick=@errorModalOk>Okay</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     static Type type = typeof(Asset);
@@ -429,6 +450,9 @@
     private List<Status> statusList;
     private List<AssetType> typeList;
     private List<UserPartial> userList;
+
+    private string output = "The following fields are missing: ";
+    private bool showError = false;
 
     private string newName;
     private string newDesc;
@@ -459,6 +483,7 @@
         typeList = AssetTypeService.GetAllTypes();
         userList = UserPartialService.GetAllUsers();
 
+
         newName = accessor[asset, "name"].ToString();
         newDesc = accessor[asset, "description"].ToString();
         newLocId = Int32.Parse(accessor[asset, "location_id"].ToString());
@@ -478,9 +503,56 @@
         newPhotoUrl = accessor[asset, "photo_url"].ToString();
         newPath = accessor[asset, "path"].ToString();
     }
-
-    void saveEdit()
+    async Task<bool> validity()
     {
+        List<string> errorList = new List<string>();
+        if (newName == null || newName =="")
+        {
+            errorList.Add("Name");
+        }
+        if (newDesc == null || newDesc == "")
+        {
+            errorList.Add("Description");
+        }
+        if (newLocId == null )
+        {
+            errorList.Add("Location");
+        }
+        if (newTypeId == null )
+        {
+            errorList.Add("Type");
+        }
+        if (newCreatedBy == null )
+        {
+            errorList.Add("Created By");
+        }
+        if (newUpdatedBy == null )
+        {
+            errorList.Add("Updated By");
+        }
+
+        if (errorList.Count == 0)
+            return false;
+
+        foreach (string s in errorList)
+        {
+            output += s + ", ";
+        }
+        output = output.Substring(0, output.Length - 2);
+        showError = true;
+
+        return true;
+    }
+    void errorModalOk()
+    {
+        showError = false;
+        output = "The following fields are missing: ";
+    }
+    async void saveEdit()
+    {
+        if (await validity())
+            return;
+
         asset.name = newName;
         asset.description = newDesc;
         asset.location_id = newLocId;
