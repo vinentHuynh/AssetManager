@@ -479,7 +479,6 @@
         createdById = Int32.Parse(accessor[asset, "created_by"].ToString());
         createdBy = UserPartialService.GetUserById(createdById);
 
-
         newName = accessor[asset, "name"].ToString();
         newDesc = accessor[asset, "description"].ToString();
         newLocId = Int32.Parse(accessor[asset, "location_id"].ToString());
@@ -516,14 +515,6 @@
         if (newTypeId == null )
         {
             errorList.Add("Type");
-        }
-        if (newCreatedBy == null )
-        {
-            errorList.Add("Created By");
-        }
-        if (newUpdatedBy == null )
-        {
-            errorList.Add("Updated By");
         }
 
         if (errorList.Count == 0)
