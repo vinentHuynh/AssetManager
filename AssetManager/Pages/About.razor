@@ -1,4 +1,5 @@
 ﻿@page "/help"
+@inject IJSRuntime JsRuntime
 
 @* ============= *@
 @*   HELP PAGE   *@
@@ -15,7 +16,7 @@
         </iframe>
 
         @* Button #1 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             What Is An Asset?
         </button>
         <div class="content"><p>
@@ -23,7 +24,7 @@
         </p></div>
 
         @* Button #2 *@
-        <<<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Getting Started
         </button>
         <div class="content"><p>
@@ -31,7 +32,7 @@
         </p></div>
 
         @* Button #3 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Importing/Exporting
         </button>
         <div class="content"><p>
@@ -39,7 +40,7 @@
         </p></div>
 
         @* Button #4 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Add
         </button>
         <div class="content"><p>
@@ -47,7 +48,7 @@
         </p></div>
 
         @* Button #5 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Editing
         </button>
         <div class="content"><p>
@@ -55,7 +56,7 @@
         </p></div>
 
         @* Button #6 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Filtering
         </button>
         <div class="content"><p>
@@ -63,7 +64,7 @@
         </p></div>
 
         @* Button #7 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Deleting
         </button>
         <div class="content"><p>
@@ -71,7 +72,7 @@
         </p></div>
 
         @* Button #8 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Maintenance Requests
         </button>
         <div class="content"><p>
@@ -79,7 +80,7 @@
         </p></div>
 
         @* Button #9 *@
-        <<button type="button" class="collapse">
+        <button type="button" class="collapse">
             Borrow Requests
         </button>
         <div class="content"><p>
@@ -90,19 +91,6 @@
 </div>
 
 
-@code {
-    var collapse = document.getElementsByClassName("collapse");
-    var i;
 
-    for (i = 0; i < collapse.length; i++) {
-        collapse[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-              content.style.display = "none";
-            } else {
-              content.style.display = "block";
-            }
-            });
-    }
+@code {
 }
