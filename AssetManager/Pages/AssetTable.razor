@@ -10,14 +10,16 @@
 @inject NavigationManager NavigationManager
 @inject Asset asset
 @inject UserModel user
+@inject CustomAuthenticationProvider AuthStateProvider
 
 <div class="main container-sm">
-   <h1 class="text-center">Assets</h1>
-   
+   <h1 class="text-center">Assets</h1> 
     <div class="input-group mb-3 align justify-content-end">
-        <div class="mx-3">
-            <button type="submit" class=" btn btn-primary " @onclick="addAsset" >Add Asset</button>
-        </div>
+          <AuthorizeView Roles="Admin">
+            <div class="mx-3">
+                <button type="submit" class=" btn btn-primary " @onclick="addAsset">Add Asset</button>
+            </div>
+          </AuthorizeView>
      
         <input type="text" placeholder="Search" @bind-value="search"/>
         <button type="submit" class="btn btn-primary "@onclick="searchFilter">Search</button>
@@ -161,6 +163,8 @@
     string description = "";
     string comments = "";
 
+    UserModel curUser = new UserModel();
+
     private ConnectionDB connection = new ConnectionDB();
     DataTable dt = new DataTable();
     string search = "";
@@ -192,7 +196,9 @@
     {
         MaintenanceService.CreateMaintenanceRequest(this.asset.id, this.user.id, description);
         showMaintenance = false;
-        NavigationManager.NavigateTo("/Maintenance");
+        getRole();
+        if(curUser.role == 0)
+            NavigationManager.NavigateTo("/Maintenance");
     }
 
     void borrow(object id, object name)
@@ -208,12 +214,30 @@
     {
         BorrowHistoryService.CreateBorrowRequest(this.user.id, this.asset.id, comments);
         showBorrow= false;
-        NavigationManager.NavigateTo("/Borrow_history");
+        getRole();
+        if (curUser.role == 0)
+            NavigationManager.NavigateTo("/Borrow_history");
     }
 
     void addAsset()
     {
-        NavigationManager.NavigateTo("/AssetAdd");
+        getRole();
+        if (curUser.role == 0)
+            NavigationManager.NavigateTo("/AssetAdd");
+    }
+
+    
+    async void getRole(){
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        curUser.email = user.Identity.Name;     
+        ConnectionDB connection = new ConnectionDB();
+        connection.OpenConnection();
+        string query = "SELECT role FROM dbo.[user] WHERE email='" + curUser.email + "'";
+        Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
+        while (dr.Read())
+            curUser.role = dr.GetInt32(0);
+        connection.CloseConnection();
     }
 
     void searchFilter()

@@ -1,5 +1,6 @@
 ﻿@page "/AssetEdit"
 
+@attribute [Authorize (Roles="Admin")]
 @inject Asset asset
 @inject UserModel user
 @inject NavigationManager NavigationManager

@@ -8,8 +8,14 @@
 @inject Classes.UserModel userModel
 
 @*
-TO-DO
-    -validation messages
+test account credentials
+    Admin:
+    hashadmin@email.com
+    hashadminpassword
+
+    User:
+    hashtest@email.com
+    hashpassword
 *@
 
 <div class="main d-flex align-items-center " style="height: 100vh;">
@@ -69,9 +75,11 @@ TO-DO
                 NavigationManager.NavigateTo("/Asset");
         }
         else
-            LoginMessage = "Invalid username or password.";
+            LoginMessage = "Invalid username or password.";          
+    }
 
-           
+    protected override async Task OnInitializedAsync(){
+        await AuthStateProvider.Logout();
     }
     
    

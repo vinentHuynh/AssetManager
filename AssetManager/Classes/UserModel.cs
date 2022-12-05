@@ -39,8 +39,7 @@ namespace AssetManager.Classes
             for(int i = 0; i < dr.FieldCount; i++)
             {
                 string check = dr.GetString(i);
-                if (check == password)                
-                    verify = true;                         
+                verify = BCrypt.Net.BCrypt.Verify(password, check);                        
             }
             connection.CloseConnection();
             

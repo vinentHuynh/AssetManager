@@ -5,27 +5,23 @@
 @inject NavigationManager NavigationManager
 @inject CustomAuthenticationProvider AuthStateProvider
 
-@*
-    To Do:      
-        -validation messages
-        -only admin sees id field
-*@
-
 
 <div class="main h-100">
     <div class="container-fluid h-100 ">
 
         <form class="h-100 overflow-auto">
 
-            <EditForm Model="@curUser" OnValidSubmit="@CreateUser">
+            <EditForm Model="@curUser" OnValidSubmit="@CreateUser" Context="editContext">
                 <DataAnnotationsValidator/>
                 <ValidationSummary />
 
-                @* <div class="mb-3">
-                    <label for="id" class="form-label">ID</label>
-                    <InputNumber type="number" @bind-Value="user.Id" class="form-control" min="1"/>
-                </div> *@
-            
+                <AuthorizeView Roles="Admin" Context="authContext">
+                    <div class="mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <InputNumber type="number" @bind-Value="curUser.id" class="form-control" />
+                    </div>             
+                </AuthorizeView>
+               
                 <div class="mb-3">
                     <label for="first_name" class="form-label">First Name</label>
                     <InputText type="text" @bind-Value="curUser.first_name" class="form-control" />
@@ -49,10 +45,16 @@
                     <label for="password" class="form-label">Password</label>
                     <InputText type="password" @bind-Value="curUser.password" class="form-control" />
                 </div>
+                <AuthorizeView Roles="Admin" Context="authContext">
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <InputNumber type="number" @bind-Value="curUser.role" class="form-control" />
+                    </div>
+                </AuthorizeView>
+                
                 <div class="mb-3">
-                    <button type="submit"  @onclick="ModalShow" class="btn btn-primary">Add</button>
+                    <button type="submit" @onclick="ModalShow" class="btn btn-primary">Add</button>
                     <button type="button" @onclick="RefreshPage" class="btn btn-primary">Reset</button>
-                    <button type="button" @onclick="test" class="btn btn-primary">test</button>
                     @if (showModal)
                     {
                         <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
@@ -73,7 +75,7 @@
                                 </div>
                             </div>
                         </div>
-                    }
+                    }                   
                     <hr />
                     
                 </div>
@@ -89,7 +91,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            @*<th>ID</th>*@
+                            <AuthorizeView Roles="Admin">
+                                <th>ID</th>
+                            </AuthorizeView>                            
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Phone Number</th>
@@ -99,7 +103,9 @@
 
                     <tbody>
                         <tr>
-                            @*<td>@user.Id</td>*@                            
+                            <AuthorizeView Roles="Admin">
+                                <td>@curUser.id</td>
+                            </AuthorizeView>                                             
                             <td>@curUser.first_name</td>
                             <td>@curUser.last_name</td>
                             <td>@curUser.phone_number</td>
@@ -116,18 +122,20 @@
 
 @code{
     UserModel curUser = new UserModel();
-    public async void test() {
-        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        curUser.email = user.Identity.Name;
-    }
 
     public void CreateUser(){
+        
         ConnectionDB connection = new ConnectionDB();
         connection.OpenConnection();
-        string query = "INSERT INTO dbo.[user](first_name, last_name, phone_number, email, password, role) VALUES('"
-            + curUser.first_name + "', '" + curUser.last_name + "', '" + curUser.phone_number + "', '" + curUser.email + "', '" + curUser.password + "', 1)";
-        connection.DataReader(query);
+
+        Cryptography crypt = new Cryptography();
+        string hash = crypt.hashPassword(curUser.password);
+
+        string query = "INSERT INTO dbo.[user](first_name, last_name, phone_number, email, password, role) VALUES('" 
+            + curUser.first_name + "', '" + curUser.last_name + "', '" + curUser.phone_number + "', '" + curUser.email + "', '" + hash + "', 1)";
+        connection.DataReader(query);      
+
+        connection.CloseConnection();
     }
 
     public void RefreshPage(){
@@ -138,8 +146,6 @@
 
     bool showModal = false;
     void ModalShow() => showModal = true;
-    void ModalCancel() => showModal = false; 
-
-
+    void ModalCancel() => showModal = false;
 
 }
