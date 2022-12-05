@@ -63,9 +63,10 @@ namespace AssetManager.Classes
         }
 
         public async Task Logout()
-        {
-            SecureStorage.Remove("accounttoken");
-            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        {            
+                SecureStorage.Remove("accounttoken");
+                NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());            
+                
         }
     }
 }

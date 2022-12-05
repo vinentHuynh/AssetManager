@@ -53,6 +53,7 @@ test account credentials
 
 
 @code {
+    
     string LoginMessage;
     int role = 1;
     public async Task SuccessfulLogin() {
@@ -77,10 +78,10 @@ test account credentials
         else
             LoginMessage = "Invalid username or password.";          
     }
-
-    protected override async Task OnInitializedAsync(){
+     protected override async Task OnInitializedAsync(){
         await AuthStateProvider.Logout();
     }
+   
     
    
 }
