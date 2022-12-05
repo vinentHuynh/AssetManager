@@ -132,6 +132,7 @@
 .collapse {
     background-color: #003366;
     border-color: #003366;
+    display: inline-table;
     margin-right: auto;
     margin-left: auto;
     border-top-left-radius: 10px;
