@@ -1,0 +1,108 @@
+﻿@page "/help"
+
+@* ============= *@
+@*   HELP PAGE   *@
+@* ============= *@
+
+<div class="main">
+    <div class="main-content">
+
+        @* Header *@
+        <h1 style="padding-bottom:20px;">Help/FAQs</h1>
+
+        @* Video Embed *@
+        <iframe width="80%" height="60%" src="https://www.youtube.com/embed/tgbNymZqY">
+        </iframe>
+
+        @* Button #1 *@
+        <<button type="button" class="collapse">
+            What Is An Asset?
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #2 *@
+        <<<button type="button" class="collapse">
+            Getting Started
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #3 *@
+        <<button type="button" class="collapse">
+            Importing/Exporting
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #4 *@
+        <<button type="button" class="collapse">
+            Add
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #5 *@
+        <<button type="button" class="collapse">
+            Editing
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #6 *@
+        <<button type="button" class="collapse">
+            Filtering
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #7 *@
+        <<button type="button" class="collapse">
+            Deleting
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #8 *@
+        <<button type="button" class="collapse">
+            Maintenance Requests
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+        @* Button #9 *@
+        <<button type="button" class="collapse">
+            Borrow Requests
+        </button>
+        <div class="content"><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p></div>
+
+    </div>
+</div>
+
+
+@code {
+    var collapse = document.getElementsByClassName("collapse");
+    var i;
+
+    for (i = 0; i < collapse.length; i++) {
+        collapse[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+              content.style.display = "none";
+            } else {
+              content.style.display = "block";
+            }
+            });
+    }
+}
