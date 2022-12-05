@@ -1,6 +1,8 @@
 ﻿@page "/help"
 @page "/Admin/help"
 @inject IJSRuntime JsRuntime
+@using AssetManager.Classes
+@using AssetManager.Model
 
 @* ============= *@
 @*   HELP PAGE   *@
@@ -17,7 +19,7 @@
         </iframe>
 
         @* Button #1 *@
-        <button type="input" class="collapse">
+        <button type="button" class="collapse">
             What Is An Asset?
         </button>
         <div class="content"><p>
