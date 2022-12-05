@@ -150,9 +150,9 @@
     font-size: 15px;
 }
 
-    .active, .collapse:hover {
-        background-color: #1a4775;
-    }
+.active, .collapse:hover {
+    background-color: #1a4775;
+ }
 
 .active {
     border-top-left-radius: 10px;
