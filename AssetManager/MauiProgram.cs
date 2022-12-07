@@ -9,6 +9,7 @@ namespace AssetManager;
 
 public static class MauiProgram
 {
+
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
@@ -20,17 +21,18 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddMauiBlazorWebView();
-		#if DEBUG
+#if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-		
+
 		builder.Services.AddAuthorizationCore();
 		builder.Services.AddScoped<CustomAuthenticationProvider>();
 		builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthenticationProvider>());
 		builder.Services.AddSingleton<Asset>();
 		builder.Services.AddSingleton<UserModel>();
-
+		
 		return builder.Build();
 	}
+
 }
 

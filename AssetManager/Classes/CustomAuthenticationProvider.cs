@@ -35,8 +35,8 @@ namespace AssetManager.Classes
                     else
                         roleString = "User";
                     connection.CloseConnection();
-                    
-                    var claims = new[] { new Claim(ClaimTypes.Name, userInfo), new Claim(ClaimTypes.Role, roleString) };
+					
+					var claims = new[] { new Claim(ClaimTypes.Name, userInfo), new Claim(ClaimTypes.Role, roleString) };
                     identity = new ClaimsIdentity(claims, "Server Authentication");
                     
                     return new AuthenticationState(new ClaimsPrincipal(identity));
