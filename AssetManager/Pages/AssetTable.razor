@@ -242,11 +242,12 @@
 
     void searchFilter()
     {
-        query = "select id,name,description,manufacturer,model,status_id,borrow from dbo.asset where name like '" + search + "%'" 
+        query = "select id,name,description,manufacturer,model,status_id,borrow from dbo.asset where deleted = 0 "
+        + "and (name like '" + search + "%'" 
         + "or id like '" + search + "%'"
         + "or description like '" + search + "%'" 
         + "or model like '" + search + "%'" 
-        + "or manufacturer like '" + search + "%'";
+        + "or manufacturer like '" + search + "%')";
         OnInitialized();
     }
 }
