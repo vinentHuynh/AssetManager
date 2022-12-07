@@ -16,10 +16,7 @@
                 <ValidationSummary />
 
                 <AuthorizeView Roles="Admin" Context="authContext">
-                    <div class="mb-3">
-                        <label for="id" class="form-label">ID</label>
-                        <InputNumber type="number" @bind-Value="curUser.id" class="form-control" />
-                    </div>             
+                           
                 </AuthorizeView>
                
                 <div class="mb-3">
@@ -97,7 +94,7 @@
                     <thead>
                         <tr>
                             <AuthorizeView Roles="Admin">
-                                <th>ID</th>
+                                
                             </AuthorizeView>                            
                             <th>First Name</th>
                             <th>Last Name</th>
@@ -112,7 +109,7 @@
                     <tbody>
                         <tr>
                             <AuthorizeView Roles="Admin">
-                                <td>@curUser.id</td>
+                                
                             </AuthorizeView>                                             
                             <td>@curUser.first_name</td>
                             <td>@curUser.last_name</td>
