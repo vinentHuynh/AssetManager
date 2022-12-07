@@ -53,7 +53,7 @@
                 </AuthorizeView>
                 
                 <div class="mb-3">
-                    <button type="submit" @onclick="ModalShow" class="btn btn-primary">Add</button>
+                    <button type="submit"  class="btn btn-primary">Add</button>
                     <button type="button" @onclick="RefreshPage" class="btn btn-primary">Reset</button>
                     @if (showModal)
                     {
@@ -65,7 +65,12 @@
                                         <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>New account created!</p>
+                                        @if (uniqueEmail){
+                                            <p>New account created!</p>
+                                        }
+                                        else {
+                                            <p>This email is already in use!</p>
+                                        }                                        
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn" @onclick="@ModalCancel">OK</button>
@@ -98,6 +103,9 @@
                             <th>Last Name</th>
                             <th>Phone Number</th>
                             <th>Email</th>
+                            <AuthorizeView Roles="Admin">
+                                <th>Role</th>
+                            </AuthorizeView>                            
                         </tr>
                     </thead>
 
@@ -110,6 +118,9 @@
                             <td>@curUser.last_name</td>
                             <td>@curUser.phone_number</td>
                             <td>@curUser.email</td>
+                            <AuthorizeView Roles="Admin">
+                                <td>@curUser.role</td>
+                            </AuthorizeView>                            
                         </tr>
                     </tbody>
 
@@ -123,29 +134,53 @@
 @code{
     UserModel curUser = new UserModel();
 
+    bool uniqueEmail = true;
+    bool showModal = false;
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+
     public void CreateUser(){
-        
+
         ConnectionDB connection = new ConnectionDB();
         connection.OpenConnection();
 
         Cryptography crypt = new Cryptography();
         string hash = crypt.hashPassword(curUser.password);
 
-        string query = "INSERT INTO dbo.[user](first_name, last_name, phone_number, email, password, role) VALUES('" 
-            + curUser.first_name + "', '" + curUser.last_name + "', '" + curUser.phone_number + "', '" + curUser.email + "', '" + hash + "', 1)";
-        connection.DataReader(query);      
+        int role = 1;
+        if (curUser.role == 0)
+            role = 0;
+        else
+            role = 1;
+
+        checkUniqueEmail(connection);
+
+        if (uniqueEmail){
+            string query = "INSERT INTO dbo.[user](first_name, last_name, phone_number, email, password, role) VALUES('"
+            + curUser.first_name + "', '" + curUser.last_name + "', '" + curUser.phone_number + "', '" + curUser.email + "', '" + hash + "', " + role + ")";
+            connection.DataReader(query);
+        }           
 
         connection.CloseConnection();
+        ModalShow();
     }
 
+    public void checkUniqueEmail(ConnectionDB connection){
+        string email = curUser.email;
+        string query = "SELECT email FROM dbo.[user]";
+        Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
+        while (dr.Read()){
+            string curItem = dr.GetString(0);
+            if (curItem == email)
+                uniqueEmail = false;
+        }
+        dr.Close();
+
+    }
     public void RefreshPage(){
 
         NavigationManager.NavigateTo("/User", true);
 
     }
-
-    bool showModal = false;
-    void ModalShow() => showModal = true;
-    void ModalCancel() => showModal = false;
 
 }

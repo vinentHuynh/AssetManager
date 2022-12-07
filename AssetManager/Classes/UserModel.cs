@@ -25,7 +25,7 @@ namespace AssetManager.Classes
         [Required]
         public string password { get; set; }
 
-        public int role { get; set; }
+        public int? role { get; set; }
 
         public bool LoginValidate(out string token)
         {
