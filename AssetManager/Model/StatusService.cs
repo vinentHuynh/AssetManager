@@ -28,6 +28,22 @@ public class StatusService
         {
             query = "SELECT id, value FROM status WHERE id = 1 OR id = 2";
         }
+        else if (id == 3)
+        {
+            query = "SELECT id, value FROM status WHERE id = 3";
+        }
+        else if (id == 4)
+        {
+            query = "SELECT id, value FROM status WHERE id = 4";
+        }
+        else if (id == 5)
+        {
+            query = "SELECT id, value FROM status WHERE id = 5";
+        }
+        else if (id == 6)
+        {
+            query = "SELECT id, value FROM status WHERE id = 6";
+        }
         else if (id == 7)
         {
             query = "SELECT id, value FROM status WHERE id = 1 OR id = 2 OR id = 7";

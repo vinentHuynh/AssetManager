@@ -31,6 +31,7 @@ public class AssetService
         string purchasePrice = asset.purchase_price != null ? ("purchase_price = " + asset.purchase_price+ ", ") : "purchase_price = NULL, ";
         string itemCount = asset.item_count != null ? ("item_count = " + asset.item_count + ", ") : "item_count = NULL, ";
         string updatedBy = asset.updated_by != null ? ("updated_by = " + asset.updated_by + ", ") : "updated_by = NULL, ";
+        string borrow = asset.borrow != null ? (", borrow = '" + asset.borrow + "' ") : " ";
 
         string query =
             "UPDATE asset " +
@@ -52,8 +53,7 @@ public class AssetService
                 updatedBy +
                 "last_updated = CAST('" + asset.last_updated + "' AS DATETIME), " +
                 "photo_url = '" + asset.photo_url + "', " +
-                "path = '" + asset.path + "', " +
-                "borrow = '" + asset.borrow + "' " +
+                "path = '" + asset.path + "'" + borrow +
             "WHERE id = " + asset.id;
         connectionDB.DataReader(query);
 
