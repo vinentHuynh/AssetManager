@@ -170,7 +170,7 @@
     width: 80%;
     margin-right: auto;
     margin-left: auto;
-    display: none;
+    display: inline-table;
     overflow: hidden;
     background-color: #f1f1f1;
 }

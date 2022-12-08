@@ -1,6 +1,6 @@
 ﻿@page "/help"
 @page "/Admin/help"
-@inject IJSRuntime JsRuntime
+@inject IJSRuntime js
 @using AssetManager.Classes
 @using AssetManager.Model
 
@@ -9,7 +9,7 @@
 @* ============= *@
 
 <div class="main">
-    <div class="main-content" style="overflow:scroll;">
+    <div class="main-content" style="overflow:auto;">
 
         @* Header *@
         <h1 style="padding-bottom:20px;">Help/FAQs</h1>
@@ -99,7 +99,7 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </p></div>
 
-        @* <script type="text/javascript" src="js/buttons.js"></script> *@
+        @*<script type="text/javascript" src="js/buttons.js"></script>*@
 
     </div>
 </div>
