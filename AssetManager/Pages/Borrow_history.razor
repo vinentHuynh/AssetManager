@@ -33,11 +33,13 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
-                    @if (dr.ItemArray[4].ToString() == "")
+                    isDisabledApprove = true;
+                    isDisabledReturn = true;
+                    @if (dr.ItemArray[4] == null || dr.ItemArray[4].ToString() == "")
                     {
                         isDisabledApprove = false;
                     }
-                    else if (dr.ItemArray[5].ToString() == "")
+                    else if (dr.ItemArray[5] == null || dr.ItemArray[5].ToString() == "")
                     {
                         isDisabledReturn = false;
                     }
