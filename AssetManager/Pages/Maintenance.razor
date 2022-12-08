@@ -30,6 +30,8 @@
 
                 @foreach (DataRow dr in dt.Rows)
                 {
+                    isDisabledOut = true;
+                    isDisabledIn = true;
                     @if (dr.ItemArray[2].ToString() == "requested")
                     {
                         isDisabledOut = false;

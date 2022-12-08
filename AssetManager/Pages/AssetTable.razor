@@ -198,7 +198,13 @@
         showMaintenance = false;
         getRole();
         if(curUser.role == 0)
+        {
             NavigationManager.NavigateTo("/Maintenance");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/Asset", forceLoad: true);
+        }
     }
 
     void borrow(object id, object name)
@@ -216,7 +222,13 @@
         showBorrow= false;
         getRole();
         if (curUser.role == 0)
+        {
             NavigationManager.NavigateTo("/Borrow_history");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/Asset", forceLoad: true);
+        }
     }
 
     void addAsset()
