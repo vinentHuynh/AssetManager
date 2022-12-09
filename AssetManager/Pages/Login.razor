@@ -53,30 +53,46 @@ test account credentials
 
 
 @code {
-    
+
     string LoginMessage;
     int role = 1;
+    bool emailExists = false;
     public async Task SuccessfulLogin() {
-        var success = userModel.LoginValidate(out string token);
 
-        if (success && token != null)
-        {
-            ConnectionDB connection = new ConnectionDB();
-            connection.OpenConnection();
-            string query = "SELECT role FROM dbo.[user] WHERE email='" + token + "'";
-            Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
-            while (dr.Read()){
-                role = dr.GetInt32(0);
-            }
-
-            await AuthStateProvider.Login(token);
-            if (role == 0)
-                NavigationManager.NavigateTo("/Admin");
-            else
-                NavigationManager.NavigateTo("/Asset");
+        ConnectionDB connection = new ConnectionDB();
+        connection.OpenConnection();
+        string emailQuery = "SELECT email FROM dbo.[user]";
+        Microsoft.Data.SqlClient.SqlDataReader emails = connection.DataReader(emailQuery);
+        while (emails.Read()){
+            string curEmail = emails.GetString(0);
+            if (curEmail == userModel.email)
+                emailExists = true;
         }
-        else
-            LoginMessage = "Invalid username or password.";          
+
+        if (!emailExists)
+            LoginMessage = "Invalid username or password.";
+        else {
+            var success = userModel.LoginValidate(out string token);
+
+            if (success && token != null)
+            {
+                string query = "SELECT role FROM dbo.[user] WHERE email='" + token + "'";
+                Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
+                while (dr.Read())
+                {
+                    role = dr.GetInt32(0);
+                }
+
+                await AuthStateProvider.Login(token);
+                if (role == 0)
+                    NavigationManager.NavigateTo("/Admin");
+                else
+                    NavigationManager.NavigateTo("/Asset");
+            }
+            else
+                LoginMessage = "Invalid username or password.";
+        }
+            
     }
     //protected override async Task OnInitializedAsync(){
     //    await AuthStateProvider.Logout();
