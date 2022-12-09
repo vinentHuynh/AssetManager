@@ -72,27 +72,29 @@ test account credentials
 
         if (!emailExists)
             LoginMessage = "Invalid username or password.";
+        else{
+            var success = userModel.LoginValidate(out string token);
 
-        
-        var success = userModel.LoginValidate(out string token);
-
-        if (success && token != null && emailExists)
-        {
-            string query = "SELECT role FROM dbo.[user] WHERE email='" + token + "'";
-            Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
-            while (dr.Read())
+            if (success && token != null && emailExists)
             {
-                role = dr.GetInt32(0);
-            }
+                string query = "SELECT role FROM dbo.[user] WHERE email='" + token + "'";
+                Microsoft.Data.SqlClient.SqlDataReader dr = connection.DataReader(query);
+                while (dr.Read())
+                {
+                    role = dr.GetInt32(0);
+                }
 
-            await AuthStateProvider.Login(token);
-            if (role == 0)
-                NavigationManager.NavigateTo("/Admin");
+                await AuthStateProvider.Login(token);
+                if (role == 0)
+                    NavigationManager.NavigateTo("/Admin");
+                else
+                    NavigationManager.NavigateTo("/Asset");
+            }
             else
-                NavigationManager.NavigateTo("/Asset");
+                LoginMessage = "Invalid username or password.";
         }
-        else
-            LoginMessage = "Invalid username or password.";
+        
+        
             
     }
     //protected override async Task OnInitializedAsync(){
